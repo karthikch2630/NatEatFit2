@@ -1,0 +1,29 @@
+import React from 'react';
+
+// Home-specific sections
+import HeroSection from "../../components/sections/home/HeroSection";
+import SubscriptionSection from "../../components/sections/home/SubscriptionSection";
+import OurPromise from "../../components/sections/home/OurPromise";
+import ProcessSection from "../../components/sections/home/ProcessSection";
+
+// Shared sections (used on Home, but might be used on other pages too)
+import MenuSection from "../../components/sections/shared/MenuSection"; 
+import CTASection from "../../components/sections/shared/CTASection";
+
+const HomePage: React.FC = () => {
+  return (
+    <main>
+      <HeroSection />
+      
+      {/* Assuming 'Categories' was your Menu overview section */}
+      <MenuSection /> 
+      
+      <SubscriptionSection />
+      <OurPromise />
+      <ProcessSection />
+      <CTASection />
+    </main>
+  );
+};
+
+export default HomePage;

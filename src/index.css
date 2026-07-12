@@ -1,0 +1,41 @@
+/* 1. Import your Google Fonts first (if you are still using them) */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap');
+
+/* 2. Import Tailwind v4 */
+@import "tailwindcss";
+
+/* 3. Define your custom local font using @font-face */
+@font-face {
+  font-family: 'Boxer';
+  /* Load the most modern format first (woff2) down to the oldest (ttf) */
+  src: url('/fonts/Boxer-Regular.woff2') format('woff2'),
+       url('/fonts/Boxer-Regular.woff') format('woff'),
+       url('/fonts/Boxing-Regular.ttf') format('truetype');
+  font-weight: 400; /* Regular weight */
+  font-style: normal;
+  font-display: swap; /* Ensures text remains visible while the font loads */
+}
+@font-face {
+  font-family: 'Bosch';
+
+  src: url('/fonts/bosch.otf') format('opentype');
+  font-weight: 400; /* Regular weight */
+  font-style: normal;
+  font-display: swap; /* Ensures text remains visible while the font loads */
+}
+
+/* 4. Configure Tailwind v4 Theme */
+@theme {
+  /* Google Fonts */
+  --font-cormorant: "Cormorant Garamond", serif;
+  --font-montserrat: "Montserrat", sans-serif;
+  
+  /* Your Custom Local Font */
+  --font-boxer: "Boxer", sans-serif;
+  --font-bosch: "Bosch", sans-serif;
+}
+
+/* Optional: Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
