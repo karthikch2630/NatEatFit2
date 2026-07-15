@@ -1,7 +1,7 @@
 import { type CartItem } from '../store/cartStore';
 
 export const sendOrderToWhatsApp = (items: CartItem[]) => {
-  const BUSINESS_NUMBER = '919876543210'; // replace with real number, no +
+  const BUSINESS_NUMBER = '918688277183'; // replace with real number, no +
 
   if (!items || items.length === 0) return;
 
