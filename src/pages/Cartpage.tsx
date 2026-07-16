@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Trash2, Plus, Minus, ArrowLeft, ShoppingBag, ArrowRight } from 'lucide-react';
@@ -8,13 +8,66 @@ import { sendOrderToWhatsApp } from '../utils/sendOrderToWhatsApp';
 const CartPage: React.FC = () => {
   const { items, removeItem, updateQuantity } = useCartStore();
 
+  // Form State for Delivery Details
+  const [name, setName] = useState('');
+  const [address, setAddress] = useState('');
+  const [timeSlot, setTimeSlot] = useState('');
+  const [error, setError] = useState('');
+
   const subtotal = items.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
   const deliveryFee = subtotal > 0 ? 49 : 0;
   const taxes = subtotal * 0.05;
   const total = subtotal + deliveryFee + taxes;
 
+  // --- DYNAMIC TIME SLOT GENERATOR ---
+  const availableTimeSlots = useMemo(() => {
+    const slots: string[] = [];
+    const now = new Date();
+    const currentHour = now.getHours();
+    
+    // Add a 1-hour buffer for preparation/delivery. 
+    // E.g., if it's 2:30 PM (14), the earliest slot they can pick is 3:00 PM (15).
+    const bufferHour = currentHour + 1;
+    
+    // If it's past 11 PM, we roll over to the next day's morning slots
+    const isTomorrow = bufferHour >= 24;
+
+    const formatAMPM = (h: number) => {
+      const ampm = h >= 12 && h < 24 ? 'PM' : 'AM';
+      const displayHour = h % 12 || 12;
+      return `${displayHour}:00 ${ampm}`;
+    };
+
+    // Generate slots from 5:00 AM (5) to 12:00 AM (24)
+    for (let i = 5; i < 24; i++) {
+      if (isTomorrow || i >= bufferHour) {
+        const dayPrefix = isTomorrow ? "Tomorrow" : "Today";
+        slots.push(`${dayPrefix} (${formatAMPM(i)} - ${formatAMPM(i + 1)})`);
+      }
+    }
+
+    return slots;
+  }, []);
+
   const handleCheckout = () => {
-    sendOrderToWhatsApp(items);
+    // Basic Form Validation
+    if (!name.trim()) {
+      setError('Please enter your name.');
+      return;
+    }
+    if (!address.trim()) {
+      setError('Please enter your delivery address.');
+      return;
+    }
+    if (!timeSlot) {
+      setError('Please select a delivery time slot.');
+      return;
+    }
+
+    setError(''); // Clear errors
+
+    // Proceed to WhatsApp checkout with user details
+    sendOrderToWhatsApp(items, { name, address, timeSlot });
   };
 
   if (items.length === 0) {
@@ -149,12 +202,61 @@ const CartPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column: Order Summary */}
+          {/* Right Column: Delivery Details & Order Summary */}
           <div className="w-full lg:w-1/3">
             <div className="bg-white rounded-[2rem] border border-[#EBE8DE] shadow-sm p-6 sticky top-32">
-              <h2 className="text-xl font-black text-[#1F452A] font-bosch mb-6">Order Summary</h2>
+              
+              {/* Delivery Details Form */}
+              <h2 className="text-xl font-black text-[#1F452A] font-bosch mb-4">Delivery Details</h2>
+              
+              <div className="space-y-4 mb-6">
+                <div>
+                  <label className="block text-xs font-bold text-[#8C877D] uppercase tracking-widest mb-1.5">Name</label>
+                  <input 
+                    type="text" 
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Enter your full name"
+                    className="w-full px-4 py-3 bg-[#F9F8F4] border border-[#EBE8DE] rounded-xl text-sm focus:outline-none focus:border-[#8FB373] focus:ring-1 focus:ring-[#8FB373] transition-all"
+                  />
+                </div>
 
-              <div className="space-y-4 mb-6 text-sm font-medium text-[#5C5950]">
+                <div>
+                  <label className="block text-xs font-bold text-[#8C877D] uppercase tracking-widest mb-1.5">Delivery Address</label>
+                  <textarea 
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    placeholder="Enter your complete delivery address"
+                    rows={3}
+                    className="w-full px-4 py-3 bg-[#F9F8F4] border border-[#EBE8DE] rounded-xl text-sm focus:outline-none focus:border-[#8FB373] focus:ring-1 focus:ring-[#8FB373] transition-all resize-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-[#8C877D] uppercase tracking-widest mb-1.5">Time Slot</label>
+                  <select 
+                    value={timeSlot}
+                    onChange={(e) => setTimeSlot(e.target.value)}
+                    className="w-full px-4 py-3 bg-[#F9F8F4] border border-[#EBE8DE] rounded-xl text-sm focus:outline-none focus:border-[#8FB373] focus:ring-1 focus:ring-[#8FB373] transition-all text-[#5C5950]"
+                  >
+                    <option value="" disabled>Select a delivery window</option>
+                    {availableTimeSlots.map((slot, index) => (
+                      <option key={index} value={slot}>{slot}</option>
+                    ))}
+                  </select>
+                </div>
+
+                {error && (
+                  <p className="text-xs font-bold text-[#D94545] mt-2">{error}</p>
+                )}
+              </div>
+
+              <hr className="border-[#EBE8DE] my-6" />
+
+              {/* Summary */}
+              <h2 className="text-xl font-black text-[#1F452A] font-bosch mb-4">Order Summary</h2>
+
+              <div className="space-y-3 mb-6 text-sm font-medium text-[#5C5950]">
                 <div className="flex justify-between">
                   <span>Subtotal</span>
                   <span>₹{subtotal.toFixed(2)}</span>
@@ -169,7 +271,7 @@ const CartPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="border-t border-[#F0EFE9] pt-4 mb-8">
+              <div className="border-t border-[#F0EFE9] pt-4 mb-6">
                 <div className="flex justify-between items-center">
                   <span className="text-lg font-bold text-[#1F452A]">Total</span>
                   <span className="text-2xl font-black text-[#2A5C38]">₹{total.toFixed(2)}</span>

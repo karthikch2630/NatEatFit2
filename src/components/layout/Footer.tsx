@@ -98,10 +98,12 @@ const Footer: React.FC = () => {
             {/* Instagram Link with SVG */}
             <motion.a 
               href="#" 
+              aria-label="Follow us on Instagram"
               whileHover={{ y: -2, color: "#fff" }}
               className="flex items-center gap-2 hover:text-white transition-colors"
             >
               <svg 
+                aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg" 
                 width="18" 
                 height="18" 
@@ -122,10 +124,11 @@ const Footer: React.FC = () => {
             {/* Back to Top Button */}
             <motion.button 
               onClick={scrollToTop}
+              aria-label="Scroll back to top"
               whileHover={{ y: -2, color: "#fff" }}
               className="flex items-center gap-2 hover:text-white transition-colors"
             >
-              <ArrowUp size={18} />
+              <ArrowUp size={18} aria-hidden="true" />
               Back to top
             </motion.button>
           </div>

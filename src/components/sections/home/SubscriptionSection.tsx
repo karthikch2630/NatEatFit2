@@ -1,15 +1,19 @@
-import React from 'react';
-import { motion, type Variants } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence, type Variants } from 'framer-motion';
+import { X, MessageCircle } from 'lucide-react';
+
+// Replace with your actual business WhatsApp number (include country code without +)
+const WHATSAPP_NUMBER = "919959425322";
 
 const SubscriptionSection: React.FC = () => {
-  // Enhanced plan data with a feature list and image URLs for better conversion
+  // Enhanced plan data
   const plans = [
     {
       name: "Lean Life Salad",
       weight: "350g",
       price: "4,999",
       desc: "Perfect for weight management. Fresh, crunchy salads.",
-      image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=600&auto=format&fit=crop", // Placeholder Salad
+      image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=600&auto=format&fit=crop",
       features: [
         "26 Salads a month",
         "Calorie-counted meals",
@@ -24,7 +28,7 @@ const SubscriptionSection: React.FC = () => {
       weight: "500g",
       price: "5,499",
       desc: "High-protein fuel for the active professional. Balanced macros.",
-      image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=600&auto=format&fit=crop", // Placeholder Protein Bowl
+      image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=600&auto=format&fit=crop",
       features: [
         "26 Bowls a month",
         "40g+ Protein per bowl",
@@ -39,7 +43,7 @@ const SubscriptionSection: React.FC = () => {
       weight: "550g",
       price: "5,799",
       desc: "Premium creamy buffalo milk oats. The ultimate healthy start.",
-      image: "https://images.unsplash.com/photo-1517673400267-0251440c45dc?q=80&w=600&auto=format&fit=crop", // Placeholder Oats
+      image: "https://images.unsplash.com/photo-1517673400267-0251440c45dc?q=80&w=600&auto=format&fit=crop",
       features: [
         "26 Oat Bowls a month",
         "Premium exotic fruits",
@@ -50,6 +54,21 @@ const SubscriptionSection: React.FC = () => {
       recommended: false
     }
   ];
+
+  type PlanType = typeof plans[0];
+  const [selectedPlan, setSelectedPlan] = useState<PlanType | null>(null);
+
+  // Handlers for WhatsApp redirects
+  const handleSampleBowlClick = () => {
+    const msg = encodeURIComponent("Hi! I'm interested in trying a sample bowl. Could you share the options? (Salads ₹200, Meals ₹250, Oats ₹199-299).");
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
+  };
+
+  const handleSubscribeWhatsApp = (plan: PlanType) => {
+    const msg = encodeURIComponent(`Hi! I would like to subscribe to the ${plan.name} plan at ₹${plan.price}/month. Please guide me through the setup.`);
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
+    setSelectedPlan(null);
+  };
 
   // Framer Motion Variants
   const containerVariants = {
@@ -99,6 +118,7 @@ const SubscriptionSection: React.FC = () => {
           className="text-center mb-20"
         >
           <motion.div 
+            onClick={handleSampleBowlClick}
             whileHover={{ scale: 1.05 }}
             className="inline-block cursor-pointer px-6 py-2 mb-6 bg-[#8FB373]/20 border border-[#8FB373]/50 text-[#E3F0D8] font-bold text-xs uppercase tracking-widest rounded-full shadow-[0_0_15px_rgba(143,179,115,0.3)] transition-all hover:bg-[#8FB373] hover:text-[#425440]"
           >
@@ -141,14 +161,12 @@ const SubscriptionSection: React.FC = () => {
                 </div>
               )}
               
-              {/* Added Image Container */}
               <div className="w-full h-48 mb-6 rounded-2xl overflow-hidden relative group shrink-0">
                 <img 
                   src={plan.image} 
                   alt={plan.name} 
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                {/* Subtle overlay gradient to ensure text readability if needed, or purely decorative */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
               
@@ -190,6 +208,7 @@ const SubscriptionSection: React.FC = () => {
 
               <motion.button 
                 whileTap={{ scale: 0.95 }}
+                onClick={() => setSelectedPlan(plan)}
                 className={`w-full py-4 rounded-xl font-bold tracking-wide transition-all duration-300 mt-auto ${
                   plan.recommended 
                     ? 'bg-[#354333] text-white hover:bg-[#8FB373] hover:shadow-lg' 
@@ -216,6 +235,67 @@ const SubscriptionSection: React.FC = () => {
           Hyderabad service area only. Deliveries scheduled Monday–Saturday.
         </motion.p>
       </div>
+
+      {/* Subscription Modal */}
+      <AnimatePresence>
+        {selectedPlan && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 font-montserrat">
+            {/* Dark overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedPlan(null)}
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            />
+            
+            {/* Modal Box */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-lg bg-[#FDFBF7] rounded-[2rem] shadow-2xl overflow-hidden z-10 border border-[#EBE8DE]"
+            >
+              <div className="p-8">
+                <button
+                  onClick={() => setSelectedPlan(null)}
+                  className="absolute top-6 right-6 p-2 bg-[#F3F2EE] text-[#8C877D] rounded-full hover:bg-[#EBE8DE] hover:text-[#1F452A] transition-colors"
+                >
+                  <X size={20} />
+                </button>
+
+                <div className="w-16 h-16 bg-[#E8F3E8] rounded-full flex items-center justify-center mb-6 text-[#2A5C38]">
+                  <MessageCircle size={32} />
+                </div>
+                
+                <h3 className="text-2xl font-black text-[#1F452A] font-bosch mb-2">
+                  You chose {selectedPlan.name}
+                </h3>
+                
+                <p className="text-[#5C5950] mb-6 leading-relaxed">
+                  Every subscription plan guarantees <strong>10 unique varieties rotating daily</strong>. You'll enjoy a fresh, exciting meal every day, ensuring you never get bored while hitting your health goals!
+                </p>
+
+                <div className="bg-[#F9F8F4] p-4 rounded-xl mb-8 border border-[#EBE8DE]">
+                  <p className="text-sm text-[#8C877D] mb-1 font-bold uppercase tracking-widest">Pricing Setup</p>
+                  <p className="text-xl font-black text-[#2A5C38]">₹{selectedPlan.price} <span className="text-sm font-medium text-[#5C5950]">/ 26 Days</span></p>
+                </div>
+
+                <button
+                  onClick={() => handleSubscribeWhatsApp(selectedPlan)}
+                  className="w-full py-4 bg-[#25D366] text-white font-bold text-lg rounded-full hover:bg-[#1DA851] transition-all flex items-center justify-center gap-3 shadow-md hover:shadow-lg"
+                >
+                  <MessageCircle size={24} />
+                  Continue on WhatsApp
+                </button>
+                <p className="text-center text-xs text-[#8C877D] mt-4">
+                  Our team will finalize your address and delivery slots.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };

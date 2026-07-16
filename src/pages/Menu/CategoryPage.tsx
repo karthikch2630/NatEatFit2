@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Navigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Leaf, Droplet, Coffee, ChefHat, Salad, ChevronRight } from 'lucide-react';
+import SEO from '../../components/SEO';
 
 // Import your data and types
 import { ALL_PRODUCTS } from '../../data/productsData';
@@ -77,6 +78,11 @@ const CategoryPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#FDFBF7] pt-32 pb-24 font-montserrat">
+      <SEO 
+        title={meta.title} 
+        description={meta.desc}
+        keywords={`${safeCategory}, Nat Eat Fit, healthy ${safeCategory}`}
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Breadcrumbs */}

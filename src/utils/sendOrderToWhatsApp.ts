@@ -1,7 +1,14 @@
 import { type CartItem } from '../store/cartStore';
 
-export const sendOrderToWhatsApp = (items: CartItem[]) => {
-  const BUSINESS_NUMBER = '918688277183'; // replace with real number, no +
+// Define the interface for the new delivery details
+export interface UserDeliveryDetails {
+  name: string;
+  address: string;
+  timeSlot: string;
+}
+
+export const sendOrderToWhatsApp = (items: CartItem[], userDetails: UserDeliveryDetails) => {
+  const BUSINESS_NUMBER = '919959425322'; // replace with real number, no +
 
   if (!items || items.length === 0) return;
 
@@ -10,7 +17,17 @@ export const sendOrderToWhatsApp = (items: CartItem[]) => {
   const taxes = subtotal * 0.05;
   const total = subtotal + deliveryFee + taxes;
 
+  // Build the message string
   let message = `*🥗 NEW ORDER — NAT EAT FIT*\n\n`;
+  
+  // Add Customer Details section
+  message += `*📝 CUSTOMER DETAILS*\n`;
+  message += `Name: ${userDetails.name}\n`;
+  message += `Address: ${userDetails.address}\n`;
+  message += `Time Slot: ${userDetails.timeSlot}\n\n`;
+
+  // Add Order Details section
+  message += `*🛒 ORDER SUMMARY*\n`;
   message += '```\n';
 
   items.forEach((item, index) => {
@@ -39,6 +56,7 @@ export const sendOrderToWhatsApp = (items: CartItem[]) => {
   message += '```\n\n';
   message += `Please confirm my order and share the payment details. Thank you! 🙏`;
 
+  // Open WhatsApp with pre-filled message
   const encodedMessage = encodeURIComponent(message);
   window.open(`https://wa.me/${BUSINESS_NUMBER}?text=${encodedMessage}`, '_blank');
 };

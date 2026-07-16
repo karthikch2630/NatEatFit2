@@ -23,10 +23,14 @@ const MenuSection: React.FC = () => {
         
         {/* Redesigned Tab Navigation */}
         <div className="flex justify-center mb-16">
-          <div className="inline-flex flex-wrap justify-center gap-2 bg-white p-1.5 rounded-[2rem] border border-[#E3F0D8] shadow-sm">
+          <div role="tablist" aria-label="Menu Categories" className="inline-flex flex-wrap justify-center gap-2 bg-white p-1.5 rounded-[2rem] border border-[#E3F0D8] shadow-sm">
             {(Object.keys(menuItems) as Array<keyof MenuData>).map((tab) => (
               <button
                 key={tab}
+                role="tab"
+                aria-selected={activeTab === tab}
+                aria-controls={`panel-${tab}`}
+                id={`tab-${tab}`}
                 onClick={() => setActiveTab(tab)}
                 className={`relative font-montserrat font-bold text-xs md:text-sm tracking-[0.15em] uppercase px-5 py-2.5 md:px-6 md:py-3 rounded-full transition-all duration-300 ${
                   activeTab === tab 
@@ -45,6 +49,9 @@ const MenuSection: React.FC = () => {
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab} 
+              role="tabpanel"
+              id={`panel-${activeTab}`}
+              aria-labelledby={`tab-${activeTab}`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
@@ -69,7 +76,7 @@ const MenuSection: React.FC = () => {
           viewport={{ once: true }}
           className="mt-16 flex justify-center"
         >
-          <Link to="/menu">
+          <Link to="/menu" aria-label="View our full menu">
             <button className="px-10 py-4 bg-transparent border-2 border-[#425440] text-[#425440] rounded-full font-montserrat text-xs md:text-sm font-bold tracking-[0.2em] hover:bg-[#425440] hover:text-white transition-colors duration-300">
               VIEW FULL MENU
             </button>

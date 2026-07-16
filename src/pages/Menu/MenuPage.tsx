@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import SEO from '../../components/SEO';
 import { Leaf, Drumstick } from 'lucide-react';
 import ProductCard from '../../components/ui/ProductCard';
 import { CustomSortDropdown } from '../../components/ui/CusDropDown';
@@ -47,6 +48,10 @@ const MenuPage: React.FC = () => {
 
   return (
     <div className="bg-[#FAF9F6] min-h-screen font-montserrat text-[#425440]">
+      <SEO 
+        title="Our Menu" 
+        description="Explore our full menu of healthy power bowls, salads, cold-pressed juices, and more. Filter by diet and sort by protein or calories." 
+      />
       
       {/* Header Section */}
       <section className="pt-32 pb-12 px-6 bg-[#425440] text-white">

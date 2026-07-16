@@ -90,12 +90,16 @@ const customizations = getCustomizationsForProduct(category, slug);
 
           {/* --- Minimalist Action Button --- */}
           {hasCustomizations ? (
-            <div className="w-full py-3 text-center border border-[#EBE8DE] text-[#5C5950] rounded-xl text-sm font-bold group-hover:bg-[#425440] group-hover:border-[#425440] group-hover:text-white transition-all duration-300">
+            <div 
+              aria-label={`Customize ${name}`}
+              className="w-full py-3 text-center border border-[#EBE8DE] text-[#5C5950] rounded-xl text-sm font-bold group-hover:bg-[#425440] group-hover:border-[#425440] group-hover:text-white transition-all duration-300"
+            >
               Customize
             </div>
           ) : (
             <button 
               onClick={handleDirectAdd}
+              aria-label={`Add ${name} to cart`}
               className="w-full py-3 text-center border border-[#EBE8DE] text-[#5C5950] rounded-xl text-sm font-bold group-hover:bg-[#425440] group-hover:border-[#425440] group-hover:text-white transition-all duration-300"
             >
               Add to Cart

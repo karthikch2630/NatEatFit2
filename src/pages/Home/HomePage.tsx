@@ -1,4 +1,5 @@
 import React from 'react';
+import SEO from '../../components/SEO';
 
 // Home-specific sections
 import HeroSection from "../../components/sections/home/HeroSection";
@@ -13,6 +14,10 @@ import CTASection from "../../components/sections/shared/CTASection";
 const HomePage: React.FC = () => {
   return (
     <main>
+      <SEO 
+        title="Home" 
+        description="Welcome to Nat Eat Fit. Enjoy our premium healthy rice bowls, cold-pressed juices, and organic meals." 
+      />
       <HeroSection />
       
       {/* Assuming 'Categories' was your Menu overview section */}

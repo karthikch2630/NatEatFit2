@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Leaf, ChefHat, ShoppingBag } from 'lucide-react';
+import { ArrowLeft, Leaf, ChefHat, ShoppingBag, Settings2 } from 'lucide-react';
+import SEO from '../../components/SEO';
 
-// Imports adjusted for our architecture
+// Imports adjusted for your architecture
 import { ALL_PRODUCTS } from '../../data/productsData';
 import { useCartStore } from '../../store/cartStore';
 import { getCustomizationsForProduct } from '../../data/customizationData';
@@ -16,13 +17,14 @@ const parsePrice = (price: string | number): number => {
 
 const ProductDetailPage = () => {
   const { slug } = useParams<{ slug: string }>();
+  const navigate = useNavigate(); // Added useNavigate hook
   
-  // 1. FIX: Auto-scroll to top when the page loads
+  // Auto-scroll to top when the page loads
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, [slug]);
 
-  // 2. FIX: Safer, case-insensitive product lookup directly in the component
+  // Safer, case-insensitive product lookup
   const product = ALL_PRODUCTS.find(
     (item) => item.slug.toLowerCase() === slug?.toLowerCase()
   );
@@ -49,15 +51,10 @@ const ProductDetailPage = () => {
   }
 
   // Check if product has customizations available
- const hasCustomizations = getCustomizationsForProduct(product.category, product.slug).length > 0;
+  const hasCustomizations = getCustomizationsForProduct(product.category, product.slug).length > 0;
 
-  const handleAddToCart = () => {
-    if (hasCustomizations) {
-      setShowCustomize(true);
-      return;
-    }
-    
-    // Direct Add for items with no customizations
+  // Direct Add (skips customization modal & redirects to cart)
+  const handleDirectAdd = () => {
     const basePrice = parsePrice(product.price);
     addItem({
       productId: product.id,
@@ -69,10 +66,23 @@ const ProductDetailPage = () => {
       addOns: [],
       unitPrice: basePrice,
     });
+    
+    // Redirect to cart page
+    navigate('/cart');
+  };
+
+  // Open Customization Modal
+  const handleCustomize = () => {
+    setShowCustomize(true);
   };
 
   return (
     <div className="min-h-screen bg-[#FDFBF7] pt-28 pb-32 md:pb-24 font-montserrat">
+      <SEO 
+        title={product.name} 
+        description={product.desc}
+        keywords={`${product.name}, ${product.category}, healthy food`}
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Top Navigation */}
@@ -138,14 +148,26 @@ const ProductDetailPage = () => {
               <span className="text-4xl font-black text-[#2A5C38]">{product.price}</span>
             </div>
 
-            {/* Desktop Add to Cart */}
-            <button
-              onClick={handleAddToCart}
-              className="hidden md:flex w-full md:w-auto px-12 py-4 bg-[#425440] text-white font-bold text-lg rounded-full hover:bg-[#2A5C38] transition-all items-center justify-center gap-3 mb-12 shadow-md hover:shadow-lg"
-            >
-              <ShoppingBag size={20} />
-              {hasCustomizations ? 'Customize & Add' : `Add to Cart — ${product.price}`}
-            </button>
+            {/* Desktop Action Buttons */}
+            <div className="hidden md:flex flex-row gap-4 mb-12">
+              <button
+                onClick={handleDirectAdd}
+                className="flex-1 py-4 bg-[#425440] text-white font-bold text-lg rounded-full hover:bg-[#2A5C38] transition-all flex items-center justify-center gap-3 shadow-md hover:shadow-lg"
+              >
+                <ShoppingBag size={20} />
+                Add to Cart
+              </button>
+
+              {hasCustomizations && (
+                <button
+                  onClick={handleCustomize}
+                  className="flex-1 py-4 bg-white text-[#425440] border-2 border-[#425440] font-bold text-lg rounded-full hover:bg-[#F3F2EE] transition-all flex items-center justify-center gap-3 shadow-md hover:shadow-lg"
+                >
+                  <Settings2 size={20} />
+                  Customize
+                </button>
+              )}
+            </div>
 
             {/* Clean Typographic Macros Row */}
             <div className="border-y border-[#EBE8DE] py-6 mb-10">
@@ -199,19 +221,29 @@ const ProductDetailPage = () => {
       </div>
 
       {/* MOBILE STICKY BOTTOM ACTION BAR */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-[#EBE8DE] p-4 px-6 z-40 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] pb-safe">
-        <div className="flex items-center justify-between gap-6">
-          <div className="flex flex-col">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-[#EBE8DE] p-4 px-4 sm:px-6 z-40 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] pb-safe">
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex flex-col min-w-[70px]">
             <span className="text-[10px] font-bold text-[#8C877D] uppercase tracking-widest">Total</span>
-            <span className="text-2xl font-black text-[#2A5C38]">{product.price}</span>
+            <span className="text-xl font-black text-[#2A5C38]">{product.price}</span>
           </div>
-          <button
-            onClick={handleAddToCart}
-            className="flex-1 py-4 bg-[#425440] text-white font-bold rounded-full hover:bg-[#2A5C38] transition-colors flex items-center justify-center gap-2"
-          >
-            <ShoppingBag size={18} />
-            {hasCustomizations ? 'Customize' : 'Add'}
-          </button>
+          <div className="flex-1 flex gap-2">
+            {hasCustomizations && (
+              <button
+                onClick={handleCustomize}
+                className="flex-1 py-3 bg-white text-[#425440] border-2 border-[#425440] font-bold rounded-full hover:bg-[#F3F2EE] transition-colors flex items-center justify-center text-sm"
+              >
+                Customize
+              </button>
+            )}
+            <button
+              onClick={handleDirectAdd}
+              className="flex-1 py-3 bg-[#425440] text-white font-bold rounded-full hover:bg-[#2A5C38] transition-colors flex items-center justify-center gap-2 text-sm shadow-md"
+            >
+              <ShoppingBag size={16} />
+              Add
+            </button>
+          </div>
         </div>
       </div>
 

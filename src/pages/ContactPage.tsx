@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, type Variants } from 'framer-motion';
+import SEO from '../components/SEO';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -28,6 +29,10 @@ const Contact: React.FC = () => {
 
   return (
     <main className="pt-24 pb-12 px-4 sm:px-6 bg-[#f4f7f2] min-h-screen flex flex-col justify-center">
+      <SEO 
+        title="Contact Us" 
+        description="Get in touch with Nat Eat Fit for healthy meal subscriptions, corporate catering, or general inquiries." 
+      />
       
       {/* Top Header Section */}
       <div className="max-w-7xl mx-auto w-full text-center mb-12 mt-8">

@@ -56,6 +56,7 @@ const HeroSection: React.FC = () => {
           <motion.div variants={fadeUp} className="flex items-center gap-4 mt-10">
   <button
     onClick={() => navigate("/menu")}
+    aria-label="View our full menu"
     className="font-montserrat px-8 py-3.5 text-xs md:text-sm font-bold text-white transition-all duration-300 bg-[#4A7A57] rounded-full shadow-[0_8px_20px_rgba(166,201,138,0.4)] hover:bg-[#8FB373] hover:-translate-y-1 hover:shadow-[0_12px_25px_rgba(166,201,138,0.5)]"
   >
     VIEW MENU
@@ -63,6 +64,7 @@ const HeroSection: React.FC = () => {
 
   <button
     onClick={() => navigate("/menu")}
+    aria-label="Order food now"
     className="font-montserrat px-8 py-3.5 text-xs md:text-sm font-bold text-[#425440] transition-all duration-300 bg-[#F3EFE9]/80 backdrop-blur-md border-[1.5px] border-[#425440] rounded-full hover:bg-[#425440] hover:text-[#F3EFE9]"
   >
     ORDER NOW

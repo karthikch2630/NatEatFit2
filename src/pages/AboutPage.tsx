@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion, type Variants } from 'framer-motion';
+import SEO from '../components/SEO';
 
 const AboutPage: React.FC = () => {
   // Animation variants
@@ -15,6 +16,10 @@ const AboutPage: React.FC = () => {
 
   return (
     <div className="bg-[#FAF9F6] min-h-screen font-montserrat text-[#425440]">
+      <SEO 
+        title="Our Story" 
+        description="Learn about Nat Eat Fit's mission to provide healthy, chef-prepared, nutrient-dense meals that fuel your workday." 
+      />
       
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 px-6 bg-[#425440] text-white overflow-hidden">

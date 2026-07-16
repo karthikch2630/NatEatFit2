@@ -41,13 +41,15 @@ const Navbar = () => {
           <div className="flex items-center flex-shrink-0 ml-1 lg:ml-3 lg:w-48 font-bosch">
             <button 
               className="lg:hidden p-2 text-[#425440] mr-1"
+              aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isMobileMenuOpen}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              {isMobileMenuOpen ? <X size={24} /> : <MenuIcon size={24} />}
+              {isMobileMenuOpen ? <X size={24} aria-hidden="true" /> : <MenuIcon size={24} aria-hidden="true" />}
             </button>
-            <Link to="/" className="text-2xl font-medium cursor-pointer">
-              <span className="text-[#425440]">Nat Eat</span>
-              <span className="text-[#425440]"> Fit</span>
+            <Link to="/" aria-label="Nat Eat Fit Home" className="text-2xl font-medium cursor-pointer">
+              <span className="text-[#425440]" aria-hidden="true">Nat Eat</span>
+              <span className="text-[#425440]" aria-hidden="true"> Fit</span>
             </Link>
           </div>
 
@@ -91,11 +93,15 @@ const Navbar = () => {
           <div className="flex items-center justify-end gap-2 pr-1 sm:gap-4 lg:w-48">
             <Link
               to="/cart"
+              aria-label={`Shopping cart with ${itemCount} items`}
               className="relative p-2.5 transition-colors duration-200 rounded-full text-[#5C5950] hover:bg-[#F0EFE9] hover:text-[#2A5C38]"
             >
-              <ShoppingCart size={22} strokeWidth={2.2} />
+              <ShoppingCart size={22} strokeWidth={2.2} aria-hidden="true" />
               {itemCount > 0 && (
-                <span className="absolute top-1 right-1 flex items-center justify-center w-4 h-4 text-[10px] font-bold text-white bg-[#FF6B6B] rounded-full border-2 border-[#FDFBF7]">
+                <span 
+                  className="absolute top-1 right-1 flex items-center justify-center w-4 h-4 text-[10px] font-bold text-white bg-[#FF6B6B] rounded-full border-2 border-[#FDFBF7]"
+                  aria-hidden="true"
+                >
                   {itemCount}
                 </span>
               )}

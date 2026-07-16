@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const SleekCTABanner: React.FC = () => {
   return (
@@ -50,13 +51,21 @@ const SleekCTABanner: React.FC = () => {
             </p>
             
             <div className="flex flex-wrap items-center gap-4">
-              <button className="px-6 py-3 sm:px-8 sm:py-3.5 bg-[#8FB373] text-[#1a2119] rounded-full font-bold text-sm tracking-wide shadow-lg hover:bg-white transition-all duration-300 transform hover:scale-105 active:scale-95">
-                Claim ₹500 Off
-              </button>
-              
-              <button className="px-6 py-3 sm:px-8 sm:py-3.5 bg-transparent border border-white/20 text-white rounded-full font-bold text-sm tracking-wide hover:bg-white/10 transition-all duration-300">
+              <Link 
+                to="/menu"
+                className="px-6 py-3 sm:px-8 sm:py-3.5 bg-[#8FB373] text-[#1a2119] rounded-full font-bold text-sm tracking-wide shadow-lg hover:bg-white transition-all duration-300 transform hover:scale-105 active:scale-95 inline-block text-center"
+              >
                 Menu
-              </button>
+              </Link>
+              
+              <a 
+                href="https://wa.me/919959425322" // Replace with your actual WhatsApp number
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 sm:px-8 sm:py-3.5 bg-transparent border border-white/20 text-white rounded-full font-bold text-sm tracking-wide hover:bg-white/10 transition-all duration-300 inline-block text-center"
+              >
+                Reach Us
+              </a>
             </div>
           </motion.div>
           
