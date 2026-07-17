@@ -10,6 +10,7 @@ import ProcessSection from "../../components/sections/home/ProcessSection";
 // Shared sections (used on Home, but might be used on other pages too)
 import MenuSection from "../../components/sections/shared/MenuSection"; 
 import CTASection from "../../components/sections/shared/CTASection";
+import WhyChooseUs from '../../components/sections/home/WhychooseUs';
 
 const HomePage: React.FC = () => {
   return (
@@ -19,7 +20,7 @@ const HomePage: React.FC = () => {
         description="Welcome to Nat Eat Fit. Enjoy our premium healthy rice bowls, cold-pressed juices, and organic meals." 
       />
       <HeroSection />
-      
+      <WhyChooseUs />
       {/* Assuming 'Categories' was your Menu overview section */}
       <MenuSection /> 
       
