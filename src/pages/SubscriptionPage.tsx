@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
-import { ArrowRight, Info, X, Leaf, Flame, Sparkles } from 'lucide-react';
+import { ArrowRight, Info, X, Leaf, Flame, Sparkles, MessageCircle, CheckCircle2 } from 'lucide-react';
 import SEO from '../components/SEO';
 
 // Assuming you export subscriptionPlans from here
@@ -9,7 +9,6 @@ import { subscriptionPlans } from '../data/subscriptionData';
 import { menuItems, type ProductItem } from '../data/productsData';
 
 // Replace this with your actual business WhatsApp number (include country code without +)
-// Example for India: 919876543210
 const WHATSAPP_NUMBER = "919959425322"; 
 
 const containerVariants: Variants = {
@@ -37,7 +36,6 @@ const CheckIcon = ({ recommended }: { recommended: boolean }) => (
 type SubscriptionPlanType = typeof subscriptionPlans[0];
 
 const SubscriptionPage: React.FC = () => {
-  // Modal State - Fixed the ESLint 'any' error by using the inferred type
   const [selectedPlan, setSelectedPlan] = useState<SubscriptionPlanType | null>(null);
   const [activeTab, setActiveTab] = useState<'Bowls' | 'Salads' | 'Oats'>('Bowls');
 
@@ -45,9 +43,30 @@ const SubscriptionPage: React.FC = () => {
   const activeMenuItems: ProductItem[] = menuItems[activeTab] || [];
 
   // WhatsApp Redirect Handler
-  const handleWhatsAppOrder = (itemName: string) => {
-    const message = encodeURIComponent(`Hi! I'm interested in trying a sample bowl of the ${itemName}. Could you help me place an order?`);
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank');
+  const handleWhatsAppOrder = (itemName: string, price?: string) => {
+    let message = `Hi! I'm interested in trying a sample bowl of the ${itemName}. Could you help me place an order?`;
+    if (price) {
+      message = `Hi! I would like to subscribe to the ${itemName} at ₹${price}. Please guide me through the setup.`;
+    }
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
+  };
+
+  // Separate regular plans from the All-In-One plan if it exists in your data file
+  const regularPlans = subscriptionPlans.filter(plan => !plan.name.toLowerCase().includes('all-in-one'));
+  
+  // Hardcoded All-In-One details to ensure it always renders perfectly as a horizontal card
+  const allInOnePlan = {
+    name: "All-In-One Subscription",
+    price: "15,999",
+    desc: "Complete daily nutrition sorted for the entire month. Never worry about meal prep again.",
+    image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=600&auto=format&fit=crop",
+    features: [
+      "Breakfast: Overnight Oats + 100ml Cold Pressed Juice",
+      "Lunch: High Protein Bowl (Brown Rice / Quinoa)",
+      "Evening: Fresh Lean Life Salad",
+      "26 Days of complete, calorie-counted meals",
+      "Priority delivery scheduling"
+    ]
   };
 
   return (
@@ -162,9 +181,9 @@ const SubscriptionPage: React.FC = () => {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="grid lg:grid-cols-3 gap-8 md:gap-10 items-center"
+          className="grid lg:grid-cols-3 gap-8 md:gap-10 items-stretch"
         >
-          {subscriptionPlans.map((plan) => (
+          {regularPlans.map((plan) => (
             <motion.div
               key={plan.id}
               variants={itemVariants}
@@ -246,6 +265,70 @@ const SubscriptionPage: React.FC = () => {
           ))}
         </motion.div>
 
+        {/* --- ALL-IN-ONE HORIZONTAL CARD --- */}
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="mt-12 w-full bg-[#FDFBF7] rounded-[2rem] md:rounded-[3rem] p-6 md:p-10 shadow-2xl flex flex-col lg:flex-row items-center gap-8 md:gap-12 border-4 border-[#8FB373]/20 relative overflow-hidden"
+        >
+          {/* Decorative Background Element */}
+          <div className="absolute -top-32 -right-32 w-64 h-64 bg-[#8FB373] rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
+
+          {/* Left: Image */}
+          <div className="w-full lg:w-2/5 h-64 md:h-80 rounded-2xl md:rounded-3xl overflow-hidden relative group">
+            <div className="absolute top-4 left-4 bg-[#354333] text-white px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest shadow-lg z-10">
+              Ultimate Value
+            </div>
+            <img 
+              src={allInOnePlan.image} 
+              alt={allInOnePlan.name} 
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          </div>
+
+          {/* Right: Content */}
+          <div className="w-full lg:w-3/5 flex flex-col justify-center">
+            <h3 className="font-bosch text-3xl md:text-5xl font-extrabold text-[#1F452A] mb-3">
+              {allInOnePlan.name}
+            </h3>
+            <p className="text-[#5C5950] text-sm md:text-base leading-relaxed mb-6 max-w-xl">
+              {allInOnePlan.desc}
+            </p>
+
+            <div className="mb-8 flex items-baseline">
+              <span className="text-4xl md:text-5xl font-extrabold tracking-tight text-[#2A5C38]">
+                ₹{allInOnePlan.price}
+              </span>
+              <span className="text-sm md:text-base ml-2 font-bold text-[#8C877D]">
+                / 26 Days
+              </span>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-4 mb-10">
+              {allInOnePlan.features.map((feature, idx) => (
+                <div key={idx} className="flex items-start">
+                  <CheckCircle2 className="w-5 h-5 shrink-0 text-[#8FB373] mt-0.5" />
+                  <span className="text-sm font-semibold text-[#5C5950] ml-3">
+                    {feature}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center gap-4">
+              <button 
+                onClick={() => handleWhatsAppOrder(allInOnePlan.name, allInOnePlan.price)}
+                className="w-full sm:w-auto px-8 py-4 bg-[#25D366] hover:bg-[#1DA851] text-white font-bold rounded-xl transition-all flex items-center justify-center gap-3 shadow-lg hover:shadow-xl hover:-translate-y-1"
+              >
+                <MessageCircle size={22} />
+                Subscribe via WhatsApp
+              </button>
+            </div>
+          </div>
+        </motion.div>
+
         <p className="text-center text-[#E3F0D8]/50 text-sm mt-16 flex items-center justify-center gap-2">
           <Info size={16} />
           Hyderabad service area only. Deliveries scheduled Monday–Saturday.
@@ -316,7 +399,6 @@ const SubscriptionPage: React.FC = () => {
                           alt={item.name} 
                           className="w-full h-full object-cover"
                           onError={(e) => {
-                            // Fallback if image fails to load
                             (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&q=80&w=600';
                           }}
                         />
@@ -346,10 +428,17 @@ const SubscriptionPage: React.FC = () => {
               </div>
               
               {/* Modal Footer */}
-              <div className="p-6 border-t border-[#EBE8DE] bg-white shrink-0">
-                <p className="text-xs text-center text-[#8C877D]">
+              <div className="p-6 border-t border-[#EBE8DE] bg-white shrink-0 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p className="text-xs text-center sm:text-left text-[#8C877D] max-w-md">
                   Items rotate daily. Your subscription guarantees a fresh variety from the selected category every delivery day.
                 </p>
+                <button
+                 onClick={() => handleWhatsAppOrder(allInOnePlan.name, allInOnePlan.price.toString())}
+                  className="w-full sm:w-auto px-6 py-3 bg-[#25D366] text-white font-bold rounded-xl hover:bg-[#1DA851] transition-colors flex items-center justify-center gap-2 shadow-md shrink-0"
+                >
+                  <MessageCircle size={18} />
+                  Subscribe on WhatsApp
+                </button>
               </div>
 
             </motion.div>

@@ -7,14 +7,20 @@ const HeroSection: React.FC = () => {
   const navigate = useNavigate();
 
   // --- SCROLL PARALLAX SETUP ---
-  // Track how far the user has scrolled down the page
   const { scrollY } = useScroll();
   
-  // Map the scroll position to Y offsets. 
-  // Different values create a 3D depth effect where items move at different speeds.
-  const yLeftJuice = useTransform(scrollY, [0, 800], [0, -150]); 
-  const yRightJuice = useTransform(scrollY, [0, 800], [0, -250]);
-  const ySandwich = useTransform(scrollY, [0, 800], [0, -100]);
+  // 1. Left Juice: Moves up and tilts slightly left on scroll
+  const yLeftJuice = useTransform(scrollY, [0, 1000], [0, -250]); 
+  const rotateLeftJuice = useTransform(scrollY, [0, 1000], [0, -20]); 
+  
+  // 2. Right Juice: Moves up faster (more depth) and tilts right
+  const yRightJuice = useTransform(scrollY, [0, 1000], [0, -400]);
+  const rotateRightJuice = useTransform(scrollY, [0, 1000], [0, 35]);
+  
+  // 3. Sandwich: Moves up slower and scales up slightly as if getting closer
+  const ySandwich = useTransform(scrollY, [0, 1000], [0, -150]);
+  const rotateSandwich = useTransform(scrollY, [0, 1000], [0, -10]);
+  const scaleSandwich = useTransform(scrollY, [0, 1000], [1, 1.15]);
 
   // --- REVEAL ANIMATION ---
   const fadeUp: Variants = {
@@ -63,7 +69,7 @@ const HeroSection: React.FC = () => {
       {/* 1. Left Juice Glass */}
       <motion.div 
         className="absolute left-[5%] top-[15%] hidden lg:block z-10 pointer-events-none"
-        style={{ y: yLeftJuice }}
+        style={{ y: yLeftJuice, rotate: rotateLeftJuice }}
       >
         <motion.img
           src="/juice2.webp"
@@ -77,7 +83,7 @@ const HeroSection: React.FC = () => {
       {/* 2. Right Juice Glass */}
       <motion.div 
         className="absolute right-[5%] top-[25%] hidden lg:block z-10 pointer-events-none"
-        style={{ y: yRightJuice }}
+        style={{ y: yRightJuice, rotate: rotateRightJuice }}
       >
         <motion.img
           src="/strawberry-juice.webp"
@@ -91,10 +97,10 @@ const HeroSection: React.FC = () => {
       {/* 3. Sandwich (Bottom Left) */}
       <motion.div 
         className="absolute left-[8%] top-[60%] hidden lg:block z-10 pointer-events-none"
-        style={{ y: ySandwich }}
+        style={{ y: ySandwich, rotate: rotateSandwich, scale: scaleSandwich }}
       >
         <motion.img
-          src="/sandwich.webp" // Replace with your actual sandwich image path
+          src="/sandwich.webp" 
           alt="Healthy Sandwich"
           variants={floatingBottom}
           animate="animate"

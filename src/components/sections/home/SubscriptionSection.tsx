@@ -35,8 +35,8 @@ const SubscriptionSection: React.FC = () => {
         "Priority Desk Delivery",
         "Skip Sundays"
       ],
-      tag: "Most Popular",
-      recommended: true
+      tag: "Popular",
+      recommended: false
     },
     {
       name: "Overnight Oat Bowls",
@@ -52,6 +52,21 @@ const SubscriptionSection: React.FC = () => {
       ],
       tag: "Premium",
       recommended: false
+    },
+    {
+      name: "All-In-One Plan",
+      weight: "Full Day",
+      price: "15,999",
+      desc: "Complete daily nutrition. Breakfast, lunch, and evening meals sorted.",
+      image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=600&auto=format&fit=crop",
+      features: [
+        "Breakfast: Oats + 100ml Juice",
+        "Lunch: Protein Bowl three types of rices (White/Quinoa/Brown)",
+        "Evening: Fresh Salad",
+        "26 Days of complete meals"
+      ],
+      tag: "Ultimate Value",
+      recommended: true
     }
   ];
 
@@ -107,7 +122,7 @@ const SubscriptionSection: React.FC = () => {
         className="absolute top-0 right-0 w-96 h-96 bg-[#8FB373] rounded-full blur-[120px] pointer-events-none"
       />
 
-      <div className="max-w-6xl mx-auto px-6 relative z-10">
+      <div className="max-w-[90rem] mx-auto px-6 relative z-10">
         
         {/* Header Animation */}
         <motion.div 
@@ -139,7 +154,7 @@ const SubscriptionSection: React.FC = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid lg:grid-cols-3 gap-8 md:gap-10 items-center"
+          className="grid md:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8 items-stretch"
         >
           {plans.map((plan, i) => (
             <motion.div 
@@ -149,19 +164,19 @@ const SubscriptionSection: React.FC = () => {
                 y: -12, 
                 transition: { duration: 0.3 }
               }}
-              className={`relative p-8 rounded-[2rem] border backdrop-blur-sm transition-shadow duration-300 flex flex-col ${
+              className={`relative p-6 lg:p-8 rounded-[2rem] border backdrop-blur-sm transition-shadow duration-300 flex flex-col h-full ${
                 plan.recommended 
-                  ? 'bg-white border-[#8FB373] shadow-2xl shadow-[#8FB373]/20 scale-100 lg:scale-105 z-10' 
+                  ? 'bg-white border-[#8FB373] shadow-2xl shadow-[#8FB373]/20 scale-100 xl:scale-105 z-10' 
                   : 'bg-[#4A5D48]/60 border-[#596D56]/50 shadow-xl hover:bg-[#4A5D48]/80'
               }`}
             >
               {plan.recommended && (
-                <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#7a9a61] to-[#8FB373] text-white px-6 py-2 rounded-full text-[11px] font-bold tracking-widest uppercase shadow-lg z-20">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#7a9a61] to-[#8FB373] text-white px-6 py-1.5 rounded-full text-[11px] font-bold tracking-widest uppercase shadow-lg z-20 whitespace-nowrap">
                   {plan.tag}
                 </div>
               )}
               
-              <div className="w-full h-48 mb-6 rounded-2xl overflow-hidden relative group shrink-0">
+              <div className="w-full h-40 lg:h-48 mb-6 rounded-2xl overflow-hidden relative group shrink-0">
                 <img 
                   src={plan.image} 
                   alt={plan.name} 
@@ -171,7 +186,7 @@ const SubscriptionSection: React.FC = () => {
               </div>
               
               <div className="mb-6">
-                <h3 className={`font-bosch text-2xl font-bold mb-2 ${plan.recommended ? 'text-[#354333]' : 'text-white'}`}>
+                <h3 className={`font-bosch text-xl lg:text-2xl font-bold mb-2 ${plan.recommended ? 'text-[#354333]' : 'text-white'}`}>
                   {plan.name}
                 </h3>
                 <p className={`text-sm leading-relaxed ${plan.recommended ? 'text-gray-600' : 'text-[#E3F0D8]/70'}`}>
@@ -180,10 +195,10 @@ const SubscriptionSection: React.FC = () => {
               </div>
               
               <div className="mb-6 flex items-baseline">
-                <span className={`text-5xl font-extrabold tracking-tight ${plan.recommended ? 'text-[#354333]' : 'text-white'}`}>
+                <span className={`text-4xl lg:text-5xl font-extrabold tracking-tight ${plan.recommended ? 'text-[#354333]' : 'text-white'}`}>
                   ₹{plan.price}
                 </span>
-                <span className={`text-sm ml-2 font-medium ${plan.recommended ? 'text-gray-500' : 'text-[#E3F0D8]/60'}`}>
+                <span className={`text-xs lg:text-sm ml-2 font-medium ${plan.recommended ? 'text-gray-500' : 'text-[#E3F0D8]/60'}`}>
                   / month
                 </span>
               </div>
@@ -195,11 +210,11 @@ const SubscriptionSection: React.FC = () => {
               </div>
 
               {/* Feature List */}
-              <ul className="space-y-4 mb-10 grow">
+              <ul className="space-y-3 lg:space-y-4 mb-10 grow">
                 {plan.features.map((feature, idx) => (
                   <li key={idx} className="flex items-start">
                     <CheckIcon recommended={plan.recommended} />
-                    <span className={`text-sm font-medium ${plan.recommended ? 'text-gray-700' : 'text-[#E3F0D8]/90'} ml-2`}>
+                    <span className={`text-xs lg:text-sm font-medium ${plan.recommended ? 'text-gray-700' : 'text-[#E3F0D8]/90'} ml-2`}>
                       {feature}
                     </span>
                   </li>

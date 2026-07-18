@@ -47,7 +47,7 @@ const Navbar = () => {
             >
               {isMobileMenuOpen ? <X size={24} aria-hidden="true" /> : <MenuIcon size={24} aria-hidden="true" />}
             </button>
-            <Link to="/" aria-label="Nat Eat Fit Home" className="text-2xl font-medium cursor-pointer">
+            <Link to="/" aria-label="Nat Eat Fit Home" className="text-xl sm:text-2xl font-medium cursor-pointer">
               <span className="text-[#425440]" aria-hidden="true">Nat Eat</span>
               <span className="text-[#425440]" aria-hidden="true"> Fit</span>
             </Link>
@@ -94,12 +94,12 @@ const Navbar = () => {
             <Link
               to="/cart"
               aria-label={`Shopping cart with ${itemCount} items`}
-              className="relative p-2.5 transition-colors duration-200 rounded-full text-[#5C5950] hover:bg-[#F0EFE9] hover:text-[#2A5C38]"
+              className="relative p-2 sm:p-2.5 transition-colors duration-200 rounded-full text-[#5C5950] hover:bg-[#F0EFE9] hover:text-[#2A5C38]"
             >
-              <ShoppingCart size={22} strokeWidth={2.2} aria-hidden="true" />
+              <ShoppingCart size={22} strokeWidth={2.2} aria-hidden="true" className="w-5 h-5 sm:w-[22px] sm:h-[22px]" />
               {itemCount > 0 && (
                 <span 
-                  className="absolute top-1 right-1 flex items-center justify-center w-4 h-4 text-[10px] font-bold text-white bg-[#FF6B6B] rounded-full border-2 border-[#FDFBF7]"
+                  className="absolute top-0 right-0 sm:top-1 sm:right-1 flex items-center justify-center w-4 h-4 text-[10px] font-bold text-white bg-[#FF6B6B] rounded-full border-2 border-[#FDFBF7]"
                   aria-hidden="true"
                 >
                   {itemCount}
@@ -107,10 +107,10 @@ const Navbar = () => {
               )}
             </Link>
             
-            {/* 3. Changed from a button with onClick={toggleCart} to a Link that goes to the Menu */}
+            {/* 3. RESPONSIVE ORDER NOW BUTTON */}
             <Link
               to="/menu"
-              className="sm:block px-7 py-3 text-sm font-bold font-bosch text-white transition-all duration-300 bg-[#425440] rounded-full hover:bg-[#2A5C38] whitespace-nowrap"
+              className="px-4 py-2 text-xs sm:px-7 sm:py-3 sm:text-sm font-bold font-bosch text-white transition-all duration-300 bg-[#425440] rounded-full hover:bg-[#2A5C38] whitespace-nowrap"
             >
               Order Now
             </Link>

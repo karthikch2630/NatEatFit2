@@ -1,8 +1,110 @@
-import React from 'react';
-import { motion, type Variants } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, type Variants, useScroll, useTransform, MotionValue } from 'framer-motion';
 import { Utensils, ShieldBan, Milk, ChefHat, Clock, Leaf } from 'lucide-react';
 
+// --- DATA FOR FLOATING ITEMS ---
+// Added xRange, yRange, and rotateRange to control the scroll behavior
+const floatingDecorations = [
+  {
+    src: "/juice.webp",
+    alt: "Juice",
+    className: "absolute -top-12 -right-8 w-40 md:w-56 h-40 md:h-56",
+    delay: 0.1,
+    duration: 5.5,
+    xRange: [100, -50],    // Moves from right to left
+    yRange: [-50, 80],     // Moves down
+    rotateRange: [15, -10],
+  },
+  {
+    src: "/sandwich.webp",
+    alt: "Sandwich",
+    className: "absolute top-[12%] -left-12 w-36 md:w-48 h-36 md:h-48",
+    delay: 0.3,
+    duration: 6,
+    xRange: [-150, 50],    // Moves from left to right
+    yRange: [0, -60],      // Moves slightly up
+    rotateRange: [-20, 10],
+  },
+  {
+    src: "/oats.webp",
+    alt: "Oats",
+    className: "absolute top-[40%] -right-16 w-44 md:w-60 h-44 md:h-60",
+    delay: 0.5,
+    duration: 5,
+    xRange: [120, -80],    // Moves from right to left
+    yRange: [50, -50],
+    rotateRange: [10, -20],
+  },
+  {
+    src: "/juice2.webp",
+    alt: "Green Juice",
+    className: "absolute -bottom-16 right-[15%] w-32 md:w-44 h-32 md:h-44",
+    delay: 0.9,
+    duration: 4.8,
+    xRange: [50, -100],    // Moves right to left
+    yRange: [100, -50],
+    rotateRange: [5, -15],
+  },
+  {
+    src: "/salad.webp",
+    alt: "Salad",
+    className: "absolute -bottom-12 -left-8 w-40 md:w-56 h-40 md:h-56",
+    delay: 1.1,
+    duration: 6.2,
+    xRange: [-120, 80],    // Moves left to right
+    yRange: [80, -40],
+    rotateRange: [-15, 5],
+  }
+];
+
+// --- SUB-COMPONENT FOR SCROLL ANIMATION ---
+interface FloatingItemProps {
+  item: typeof floatingDecorations[0];
+  scrollYProgress: MotionValue<number>;
+}
+
+const FloatingDecoration: React.FC<FloatingItemProps> = ({ item, scrollYProgress }) => {
+  // Map the 0-1 scroll progress to the specific ranges for this item
+  const x = useTransform(scrollYProgress, [0, 1], item.xRange);
+  const y = useTransform(scrollYProgress, [0, 1], item.yRange);
+  const rotate = useTransform(scrollYProgress, [0, 1], item.rotateRange);
+
+  return (
+    <motion.div
+      // 1. SCROLL ANIMATION (Applied to wrapper)
+      style={{ x, y, rotate }}
+      className={`${item.className} z-0 pointer-events-none`}
+    >
+      {/* 2. CONTINUOUS FLOATING ANIMATION (Applied to image) */}
+      <motion.img
+        src={item.src}
+        alt={item.alt}
+        animate={{
+          y: [0, -20, 0],
+          rotate: [0, 5, -5, 0]
+        }}
+        transition={{
+          duration: item.duration,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+        className="w-full h-full object-contain drop-shadow-2xl opacity-70"
+      />
+    </motion.div>
+  );
+};
+
+// --- MAIN COMPONENT ---
 const WhyChooseUs: React.FC = () => {
+  // Ref for the section to track its scroll position
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // Track scroll progress of the section (0 when top enters, 1 when bottom leaves)
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
   // Entrance animation for the grid items
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -16,46 +118,6 @@ const WhyChooseUs: React.FC = () => {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
   };
-
-  // Data array for all floating decorations to keep the code clean
-  const floatingDecorations = [
-    {
-      src: "/juice.webp", // Replace with your transparent orange juice
-      alt: "Juice",
-      className: "absolute -top-12 -right-8 w-40 md:w-56 h-40 md:h-56",
-      delay: 0.1,
-      duration: 5.5,
-    },
-    {
-      src: "/sandwich.webp", // Replace with your transparent sandwich
-      alt: "Sandwich",
-      className: "absolute top-[12%] -left-12 w-36 md:w-48 h-36 md:h-48",
-      delay: 0.3,
-      duration: 6,
-    },
-    {
-      src: "/oats.webp", // Replace with your transparent oats bowl
-      alt: "Oats",
-      className: "absolute top-[40%] -right-16 w-44 md:w-60 h-44 md:h-60",
-      delay: 0.5,
-      duration: 5,
-    },
-  
-    {
-      src: "/juice2.webp", // Replace with your transparent green juice
-      alt: "Green Juice",
-      className: "absolute -bottom-16 right-[15%] w-32 md:w-44 h-32 md:h-44",
-      delay: 0.9,
-      duration: 4.8,
-    },
-    {
-      src: "/salad.webp", // Replace with your transparent salad bowl
-      alt: "Salad",
-      className: "absolute -bottom-12 -left-8 w-40 md:w-56 h-40 md:h-56",
-      delay: 1.1,
-      duration: 6.2,
-    }
-  ];
 
   const features = [
     {
@@ -91,39 +153,13 @@ const WhyChooseUs: React.FC = () => {
   ];
 
   return (
-    <section className="relative py-24 bg-white overflow-hidden font-montserrat">
+    <section ref={sectionRef} className="relative py-24 bg-white overflow-hidden font-montserrat">
       
       {/* ================= FLOATING BACKGROUND IMAGES ================= */}
       {floatingDecorations.map((item, i) => (
-        <motion.div
-          key={i}
-          // 1. ENTRANCE ANIMATION: Triggers when the user scrolls to this section
-          initial={{ opacity: 0, scale: 0.3, rotate: -30 }}
-          whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, delay: item.delay, type: "spring", bounce: 0.4 }}
-          className={`${item.className} z-0 pointer-events-none`}
-        >
-          {/* 2. CONTINUOUS ANIMATION: Floats infinitely after entering */}
-          <motion.img
-            src={item.src}
-            alt={item.alt}
-            animate={{ 
-              y: [0, -20, 0], 
-              rotate: [0, 5, -5, 0] 
-            }}
-            transition={{ 
-              duration: item.duration, 
-              repeat: Infinity, 
-              ease: "easeInOut" 
-            }}
-            // Using drop-shadow-2xl and object-contain for transparent images (no borders)
-            className="w-full h-full object-contain drop-shadow-2xl opacity-70"
-          />
-        </motion.div>
+        <FloatingDecoration key={i} item={item} scrollYProgress={scrollYProgress} />
       ))}
       {/* ============================================================== */}
-
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         
