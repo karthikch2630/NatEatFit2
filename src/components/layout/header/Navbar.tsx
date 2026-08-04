@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { ShoppingCart, Menu as MenuIcon, X } from 'lucide-react';
 import MegaMenu from './MegaMenu';
 import MobileMegaMenu from './MobileMegaMenu';
+import Logo from "/logo.png";
 
 // 1. ADD THIS IMPORT (Adjust the path if your store folder is located elsewhere)
 import { useCartStore } from '../../../store/cartStore';
@@ -47,10 +48,17 @@ const Navbar = () => {
             >
               {isMobileMenuOpen ? <X size={24} aria-hidden="true" /> : <MenuIcon size={24} aria-hidden="true" />}
             </button>
-            <Link to="/" aria-label="Nat Eat Fit Home" className="text-xl sm:text-2xl font-medium cursor-pointer">
-              <span className="text-[#425440]" aria-hidden="true">Nat Eat</span>
-              <span className="text-[#425440]" aria-hidden="true"> Fit</span>
-            </Link>
+            <Link
+  to="/"
+  aria-label="Nat Eat Fit Home"
+  className="flex items-center"
+>
+  <img
+    src={Logo}
+    alt="Nat Eat Fit Logo"
+    className="h-12 sm:h-14 w-auto object-contain"
+  />
+</Link>
           </div>
 
           {/* Middle: Desktop Pill Navigation */}
