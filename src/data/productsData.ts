@@ -558,104 +558,104 @@ export const menuItems: MenuData = {
   ],  
 
   // ========================= COLD PRESSED JUICES =========================
-  Juices: [
-    {
-      name: "Pineapple Juice",
-      desc: "Fresh cold-pressed pineapple—rich in digestive enzymes and tropical sweetness.",
-      price: "₹149",
-      image: "/juice/pine-apple-juice.webp",
-      protein: "0.5g",
-      carbs: "32g",
-      calories: "130",
-      weight: "300ml",
-      preparation: "Cold-pressed fresh pineapple to retain maximum enzymes.",
-      benefits: "Contains bromelain which aids digestion and reduces inflammation."
-    },
-    {
-      name: "Green Grape Juice",
-      desc: "Pure cold-pressed green grapes, naturally sweet with no added sugar.",
-      price: "₹159",
-      image: "/juice/green-grapes-juice.webp",
-      protein: "0.5g",
-      carbs: "35g",
-      calories: "140",
-      weight: "300ml",
-      preparation: "Cold-pressed fresh green grapes.",
-      benefits: "Natural instant energy boost, rich in resveratrol."
-    },
-    {
-      name: "Apple Juice",
-      desc: "Crisp, cold-pressed Himalayan apples—refreshing and naturally delicious.",
-      price: "₹189",
-      image: "/juice/apple-juic.webp",
-      protein: "0.2g",
-      carbs: "30g",
-      calories: "120",
-      weight: "300ml",
-      preparation: "Cold-pressed Himalayan apples.",
-      benefits: "Supports heart health and hydration."
-    },
-    {
-      name: "Orange Juice",
-      desc: "Vitamin C-packed citrus burst pressed fresh daily from premium oranges.",
-      price: "₹159",
-      image: "",
-      protein: "1g",
-      carbs: "26g",
-      calories: "110",
-      weight: "300ml",
-      preparation: "Cold-pressed premium oranges.",
-      benefits: "Ultimate immune system booster."
-    },
-    {
-      name: "Carrot Juice",
-      desc: "Cold-pressed carrots—naturally sweet, high in Vitamin A and antioxidants.",
-      price: "₹129",
-      image: "",
-      protein: "2g",
-      carbs: "18g",
-      calories: "80",
-      weight: "300ml",
-      preparation: "Cold-pressed fresh carrots.",
-      benefits: "Improves vision, skin health, and provides beta-carotene."
-    },
-    {
-      name: "Beetroot Juice",
-      desc: "Earthy, deep-red beetroot juice—natural stamina booster, rich in iron.",
-      price: "₹99",
-      image: "",
-      protein: "2g",
-      carbs: "16g",
-      calories: "70",
-      weight: "300ml",
-      preparation: "Cold-pressed fresh beetroots.",
-      benefits: "Boosts athletic performance and improves blood flow."
-    },
-    {
-      name: "Watermelon Juice",
-      desc: "Ultra-hydrating, 100% pure watermelon with a hint of mint—summer in a bottle.",
-      price: "₹129",
-      image: "/juice/water-melon-juice.webp",
-      protein: "1g",
-      carbs: "20g",
-      calories: "80",
-      weight: "300ml",
-      preparation: "Cold-pressed fresh watermelon and mint.",
-      benefits: "Super hydrating and rich in lycopene."
-    },
-    {
-      name: "ABC Juice",
-      desc: "Apple + Beetroot + Carrot blend—a detoxifying, energy-boosting antioxidant powerhouse.",
-      price: "₹149",
-      image: "/juice/abc-juice.webp",
-      protein: "1.5g",
-      carbs: "23g",
-      calories: "100",
-      weight: "300ml",
-      preparation: "Cold-pressed blend of Apple, Beetroot, and Carrot.",
-      benefits: "The ultimate detox drink, promotes glowing skin and flushes toxins."
-    }
-  ],
+  Juices : [
+  {
+    name: "Cold Pressed Pineapple Juice",
+    desc: "Fresh cold-pressed pineapple juice—rich in digestive enzymes and tropical sweetness.",
+    price: "₹149",
+    image: "/juice/pine-apple-juice.webp",
+    protein: "0.5g",
+    carbs: "32g",
+    calories: "130",
+    weight: "300ml",
+    preparation: "Cold-pressed fresh pineapple to retain maximum enzymes and nutrients.",
+    benefits: "Cold-pressed pineapple juice contains bromelain, aiding digestion and reducing inflammation."
+  },
+  {
+    name: "Cold Pressed Green Grape Juice",
+    desc: "Pure cold-pressed green grape juice, naturally sweet with no added sugar.",
+    price: "₹159",
+    image: "/juice/green-grapes-juice.webp",
+    protein: "0.5g",
+    carbs: "35g",
+    calories: "140",
+    weight: "300ml",
+    preparation: "Cold-pressed fresh green grapes for maximum freshness.",
+    benefits: "Cold-pressed green grape juice provides natural energy and is rich in resveratrol."
+  },
+  {
+    name: "Cold Pressed Apple Juice",
+    desc: "Crisp cold-pressed Himalayan apple juice—refreshing and naturally delicious.",
+    price: "₹189",
+    image: "/juice/apple-juic.webp",
+    protein: "0.2g",
+    carbs: "30g",
+    calories: "120",
+    weight: "300ml",
+    preparation: "Cold-pressed Himalayan apples to preserve natural flavor and nutrients.",
+    benefits: "Supports heart health, hydration, and provides natural antioxidants."
+  },
+  {
+    name: "Cold Pressed Orange Juice",
+    desc: "Vitamin C-packed cold-pressed orange juice made fresh daily from premium oranges.",
+    price: "₹159",
+    image: "",
+    protein: "1g",
+    carbs: "26g",
+    calories: "110",
+    weight: "300ml",
+    preparation: "Cold-pressed premium oranges without heat processing.",
+    benefits: "Boosts immunity, supports healthy skin, and provides powerful antioxidants."
+  },
+  {
+    name: "Cold Pressed Carrot Juice",
+    desc: "Cold-pressed carrot juice—naturally sweet and packed with Vitamin A and antioxidants.",
+    price: "₹129",
+    image: "",
+    protein: "2g",
+    carbs: "18g",
+    calories: "80",
+    weight: "300ml",
+    preparation: "Cold-pressed fresh carrots to preserve essential nutrients.",
+    benefits: "Supports eye health, glowing skin, and provides beta-carotene."
+  },
+  {
+    name: "Cold Pressed Beetroot Juice",
+    desc: "Cold-pressed beetroot juice—earthy, refreshing, and naturally rich in iron.",
+    price: "₹99",
+    image: "",
+    protein: "2g",
+    carbs: "16g",
+    calories: "70",
+    weight: "300ml",
+    preparation: "Cold-pressed fresh beetroots for maximum nutrient retention.",
+    benefits: "Improves blood circulation, boosts stamina, and supports heart health."
+  },
+  {
+    name: "Cold Pressed Watermelon Juice",
+    desc: "Ultra-hydrating cold-pressed watermelon juice with a hint of mint—summer in a bottle.",
+    price: "₹129",
+    image: "/juice/water-melon-juice.webp",
+    protein: "1g",
+    carbs: "20g",
+    calories: "80",
+    weight: "300ml",
+    preparation: "Cold-pressed fresh watermelon and mint for a refreshing taste.",
+    benefits: "Keeps you hydrated, supports recovery, and is rich in lycopene."
+  },
+  {
+    name: "Cold Pressed ABC Juice",
+    desc: "Cold-pressed Apple + Beetroot + Carrot blend—a detoxifying, energy-boosting antioxidant powerhouse.",
+    price: "₹149",
+    image: "/juice/abc-juice.webp",
+    protein: "1.5g",
+    carbs: "23g",
+    calories: "100",
+    weight: "300ml",
+    preparation: "Cold-pressed blend of fresh Apple, Beetroot, and Carrot.",
+    benefits: "Supports detoxification, promotes glowing skin, and boosts overall vitality."
+  }
+],
 
   // ========================= SANDWICHES =========================
  

@@ -4,12 +4,12 @@ import SEO from '../../components/SEO';
 import { Leaf, Drumstick } from 'lucide-react';
 import ProductCard from '../../components/ui/ProductCard';
 import { CustomSortDropdown } from '../../components/ui/CusDropDown';
-import { 
-  ALL_PRODUCTS, 
-  type CategoryFilter, 
-  type DietFilter, 
-  type SortOption 
-} from '../../data/productsData'; 
+import {
+  ALL_PRODUCTS,
+  type CategoryFilter,
+  type DietFilter,
+  type SortOption
+} from '../../data/productsData';
 
 const MenuPage: React.FC = () => {
   // --- STATE ---
@@ -39,7 +39,7 @@ const MenuPage: React.FC = () => {
         case 'calories-asc':
           return parseNum(a.calories) - parseNum(b.calories);
         default:
-          return 0; 
+          return 0;
       }
     });
 
@@ -48,22 +48,22 @@ const MenuPage: React.FC = () => {
 
   return (
     <div className="bg-[#FAF9F6] min-h-screen font-montserrat text-[#425440]">
-      <SEO 
-        title="Our Menu" 
-        description="Explore our full menu of healthy power bowls, salads, cold-pressed juices, and more. Filter by diet and sort by protein or calories." 
+      <SEO
+        title="Our Menu"
+        description="Explore our full menu of healthy power bowls, salads, cold-pressed juices, and more. Filter by diet and sort by protein or calories."
       />
-      
+
       {/* Header Section */}
       <section className="pt-32 pb-12 px-6 bg-[#425440] text-white">
         <div className="max-w-[1400px] mx-auto">
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="font-bosch text-4xl md:text-6xl font-extrabold mb-4"
           >
             Full Menu.
           </motion.h1>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
@@ -77,13 +77,13 @@ const MenuPage: React.FC = () => {
       {/* Filter Bar (Sticky) */}
       <div className="sticky top-0 z-40 bg-[#FAF9F6]/90 backdrop-blur-md border-b border-[#E3F0D8] py-4 px-4 md:px-8 shadow-sm">
         <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          
+
           {/* Category Tabs */}
           <div className="flex overflow-x-auto w-full md:w-auto pb-2 md:pb-0 gap-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
             {[
               { id: 'all', label: 'All Items' },
               { id: 'Oats', label: 'Oats' },
-              { id: 'Bowls', label: 'Power Bowls' },
+              { id: 'Bowls', label: 'Protein Bowls' },
               { id: 'Salads', label: 'Salads' },
               { id: 'Sandwiches', label: 'Sandwiches' },
               { id: 'Juices', label: 'Juices' },
@@ -91,11 +91,10 @@ const MenuPage: React.FC = () => {
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id as CategoryFilter)}
-                className={`whitespace-nowrap px-5 py-2.5 rounded-full text-sm font-bold transition-all ${
-                  activeCategory === cat.id 
-                    ? 'bg-[#425440] text-white shadow-md' 
+                className={`whitespace-nowrap px-5 py-2.5 rounded-full text-sm font-bold transition-all ${activeCategory === cat.id
+                    ? 'bg-[#425440] text-white shadow-md'
                     : 'bg-white text-[#425440] border border-[#E3F0D8] hover:bg-[#E3F0D8]/50'
-                }`}
+                  }`}
               >
                 {cat.label}
               </button>
@@ -128,13 +127,13 @@ const MenuPage: React.FC = () => {
             {/* Sort Dropdown Component */}
             <CustomSortDropdown sortBy={sortBy} setSortBy={setSortBy} />
           </div>
-          
+
         </div>
       </div>
 
       {/* Results Section */}
       <div className="max-w-[1400px] mx-auto px-4 md:px-8 py-12 min-h-[50vh]">
-        
+
         {/* Results Count */}
         <div className="mb-8">
           <p className="text-gray-500 font-bold text-sm uppercase tracking-wider">
@@ -143,7 +142,7 @@ const MenuPage: React.FC = () => {
         </div>
 
         {/* Product Grid */}
-        <motion.div 
+        <motion.div
           layout
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8"
         >
@@ -170,7 +169,7 @@ const MenuPage: React.FC = () => {
 
         {/* Empty State */}
         {filteredAndSortedItems.length === 0 && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="text-center py-24"
@@ -178,7 +177,7 @@ const MenuPage: React.FC = () => {
             <div className="text-6xl mb-4">🥗</div>
             <h3 className="font-bosch text-2xl font-bold text-[#425440] mb-2">No items found</h3>
             <p className="text-gray-500">Try adjusting your filters to see more options.</p>
-            <button 
+            <button
               onClick={() => {
                 setActiveCategory('all');
                 setActiveDiet('all');

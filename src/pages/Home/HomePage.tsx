@@ -11,6 +11,7 @@ import ProcessSection from "../../components/sections/home/ProcessSection";
 import MenuSection from "../../components/sections/shared/MenuSection"; 
 import CTASection from "../../components/sections/shared/CTASection";
 import WhyChooseUs from '../../components/sections/home/WhychooseUs';
+import DeliveryLocations from '../../components/sections/home/DeliveryLocations';
 
 const HomePage: React.FC = () => {
   return (
@@ -23,7 +24,7 @@ const HomePage: React.FC = () => {
       <WhyChooseUs />
       {/* Assuming 'Categories' was your Menu overview section */}
       <MenuSection /> 
-      
+      <DeliveryLocations />
       <SubscriptionSection />
       <OurPromise />
       <ProcessSection />

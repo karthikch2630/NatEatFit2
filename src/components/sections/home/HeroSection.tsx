@@ -18,9 +18,9 @@ const HeroSection: React.FC = () => {
   const rotateRightJuice = useTransform(scrollY, [0, 1000], [0, 35]);
   
   // 3. Sandwich: Moves up slower and scales up slightly as if getting closer
-  const ySandwich = useTransform(scrollY, [0, 1000], [0, -150]);
-  const rotateSandwich = useTransform(scrollY, [0, 1000], [0, -10]);
-  const scaleSandwich = useTransform(scrollY, [0, 1000], [1, 1.15]);
+  // const ySandwich = useTransform(scrollY, [0, 1000], [0, -150]);
+  // const rotateSandwich = useTransform(scrollY, [0, 1000], [0, -10]);
+  // const scaleSandwich = useTransform(scrollY, [0, 1000], [1, 1.15]);
 
   // --- REVEAL ANIMATION ---
   const fadeUp: Variants = {
@@ -49,13 +49,13 @@ const HeroSection: React.FC = () => {
     },
   };
 
-  const floatingBottom: Variants = {
-    animate: {
-      y: [0, -15, 0],
-      rotate: [-5, 2, -5],
-      transition: { duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 },
-    },
-  };
+  // const floatingBottom: Variants = {
+  //   animate: {
+  //     y: [0, -15, 0],
+  //     rotate: [-5, 2, -5],
+  //     transition: { duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 },
+  //   },
+  // };
 
   return (
     <section className="relative flex flex-col items-center justify-start min-h-screen overflow-hidden bg-[#F3EFE9] pt-32 md:pt-24 h-[120vh]">
@@ -95,7 +95,7 @@ const HeroSection: React.FC = () => {
       </motion.div>
 
       {/* 3. Sandwich (Bottom Left) */}
-      <motion.div 
+      {/* <motion.div 
         className="absolute left-[8%] top-[60%] hidden lg:block z-10 pointer-events-none"
         style={{ y: ySandwich, rotate: rotateSandwich, scale: scaleSandwich }}
       >
@@ -106,7 +106,7 @@ const HeroSection: React.FC = () => {
           animate="animate"
           className="w-36 xl:w-48 h-36 xl:h-48 object-contain drop-shadow-2xl opacity-90"
         />
-      </motion.div>
+      </motion.div> */}
       {/* ======================================================================== */}
 
       {/* Main Content Container */}

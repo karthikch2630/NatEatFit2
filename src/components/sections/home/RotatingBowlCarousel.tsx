@@ -5,7 +5,7 @@ import { motion, type Variants } from 'framer-motion';
 const BOWL_IMAGES = [
   { id: 1, src: '/overnight-oats-bowl.webp', alt: 'Overnight Oats' },
   { id: 2, src: '/broccoil-salaad.webp', alt: 'Green Detox Bowl' },
-  { id: 3, src: '/butter-chicken-quinoa-bowl.webp', alt: 'Butter Chicken Bowl' },
+  { id: 3, src: '/hero-image-3.webp', alt: 'Butter Chicken Bowl' },
 ];
 
 const RotatingBowlCarousel: React.FC = () => {
