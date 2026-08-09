@@ -12,6 +12,7 @@ import MenuSection from "../../components/sections/shared/MenuSection";
 import CTASection from "../../components/sections/shared/CTASection";
 import WhyChooseUs from '../../components/sections/home/WhychooseUs';
 import DeliveryLocations from '../../components/sections/home/DeliveryLocations';
+import HomepageTestimonials from '../../components/sections/home/Testimonials';
 
 const HomePage: React.FC = () => {
   return (
@@ -26,6 +27,7 @@ const HomePage: React.FC = () => {
       <MenuSection /> 
       <DeliveryLocations />
       <SubscriptionSection />
+      <HomepageTestimonials />
       <OurPromise />
       <ProcessSection />
       <CTASection />

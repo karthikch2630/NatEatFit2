@@ -14,6 +14,7 @@ import CartPage from './pages/Cartpage'
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import SubscriptionPage from './pages/SubscriptionPage';
+import TestimonialsPage from './pages/TestimonialPage';
 
 const App: React.FC = () => {
   return (
@@ -26,6 +27,7 @@ const App: React.FC = () => {
             <Route path="/cart" element={<CartPage />} />
             <Route path="/subscription" element={<SubscriptionPage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/testimonials" element={<TestimonialsPage />} />
             <Route path="/contact" element={<ContactPage />} />
             
             {/* Menu & Product Routes */}

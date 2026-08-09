@@ -14,6 +14,7 @@ const navLinks = [
   { name: 'Menu', path: '/menu', hasDropdown: true },
   { name: 'Subscription', path: '/subscription' },
   { name: 'Our Story', path: '/about' },
+  { name: 'Testimonials', path: '/testimonials'},
   { name: 'Contact', path: '/contact' },
 ];
 

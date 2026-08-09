@@ -57,7 +57,7 @@ const AboutPage: React.FC = () => {
             className="relative h-[550px] rounded-[2rem] overflow-hidden shadow-2xl"
           >
             <img 
-              src="https://images.unsplash.com/photo-1583394838336-acd977736f90?q=80&w=2000&auto=format&fit=crop" 
+              src="/founder.png" 
               alt="Suresh - Founder and Chef" 
               className="absolute inset-0 w-full h-full object-cover"
             />
