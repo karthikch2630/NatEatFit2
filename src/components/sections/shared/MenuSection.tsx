@@ -7,72 +7,13 @@ import { menuItems, ALL_PRODUCTS, type MenuData } from '../../../data/productsDa
 const MenuSection: React.FC = () => {
   const [activeTab, setActiveTab] = useState<keyof MenuData>('Oats');
 
-  // Array of floating background decorations (Use high-res transparent PNGs/WebPs)
-  const floatingDecorations = [
-    {
-      src: "/strawberry.webp", // e.g., A fresh strawberry for the Oats
-      alt: "Fresh Strawberry",
-      className: "absolute top-[10%] -left-12 w-32 md:w-48 h-32 md:h-48",
-      delay: 0.1,
-      duration: 5.5,
-    },
-    {
-      src: "/mint.webp", // e.g., A mint leaf or spinach leaf
-      alt: "Fresh Leaf",
-      className: "absolute top-[25%] -right-10 w-24 md:w-36 h-24 md:h-36",
-      delay: 0.3,
-      duration: 6,
-    },
-    {
-      src: "/blueberry.webp", // e.g., A blueberry or pomegranate seed
-      alt: "Blueberry",
-      className: "absolute bottom-[20%] left-[2%] w-20 md:w-28 h-20 md:h-28",
-      delay: 0.5,
-      duration: 4.5,
-    },
-    {
-      src: "/almonds.webp", // e.g., A roasted almond or cashew
-      alt: "Almond",
-      className: "absolute bottom-[10%] -right-8 w-28 md:w-40 h-28 md:h-40",
-      delay: 0.7,
-      duration: 6.2,
-    }
-  ];
-
   return (
     <section className="relative py-24 bg-[#F3EFE9] overflow-hidden">
       
       {/* ================= HIGH-CLARITY BACKGROUND EFFECTS ================= */}
-      {/* Ambient Glows */}
+      {/* Ambient Glows (CSS-only for instant loading and zero performance hit) */}
       <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-white blur-[120px] opacity-60 pointer-events-none z-0" />
       <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-[#E3F0D8] blur-[120px] opacity-60 pointer-events-none z-0" />
-
-      {/* Floating Animated Images */}
-      {floatingDecorations.map((item, i) => (
-        <motion.div
-          key={i}
-          initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
-          whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, delay: item.delay, type: "spring", bounce: 0.4 }}
-          className={`${item.className} z-0 pointer-events-none hidden md:block`}
-        >
-          <motion.img
-            src={item.src}
-            alt={item.alt}
-            animate={{ 
-              y: [0, -20, 0], 
-              rotate: [0, 8, -8, 0] 
-            }}
-            transition={{ 
-              duration: item.duration, 
-              repeat: Infinity, 
-              ease: "easeInOut" 
-            }}
-            className="w-full h-full object-contain drop-shadow-2xl opacity-80"
-          />
-        </motion.div>
-      ))}
       {/* =================================================================== */}
 
       <div className="relative max-w-7xl mx-auto px-4 md:px-6 z-10">
@@ -118,10 +59,10 @@ const MenuSection: React.FC = () => {
               role="tabpanel"
               id={`panel-${activeTab}`}
               aria-labelledby={`tab-${activeTab}`}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
               className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-6 lg:gap-8"
             >
               {ALL_PRODUCTS.filter(item => item.category === activeTab).slice(0, 4).map((item) => (

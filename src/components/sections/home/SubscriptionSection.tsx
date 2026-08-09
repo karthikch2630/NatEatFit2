@@ -58,10 +58,10 @@ const SubscriptionSection: React.FC = () => {
       weight: "Full Day",
       price: "15,999",
       desc: "Complete daily nutrition. Breakfast, lunch, and evening meals sorted.",
-      image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=600&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=1200&auto=format&fit=crop",
       features: [
         "Breakfast: Oats + 100ml Juice",
-        "Lunch: Protein Bowl three types of rices (White/Quinoa/Brown)",
+        "Lunch: Protein Bowl (White/Quinoa/Brown)",
         "Evening: Fresh Salad",
         "26 Days of complete meals"
       ],
@@ -72,6 +72,10 @@ const SubscriptionSection: React.FC = () => {
 
   type PlanType = typeof plans[0];
   const [selectedPlan, setSelectedPlan] = useState<PlanType | null>(null);
+
+  // Split plans for different layouts
+  const regularPlans = plans.slice(0, 3);
+  const ultimatePlan = plans[3];
 
   // Handlers for WhatsApp redirects
   const handleSampleBowlClick = () => {
@@ -122,7 +126,7 @@ const SubscriptionSection: React.FC = () => {
         className="absolute top-0 right-0 w-96 h-96 bg-[#8FB373] rounded-full blur-[120px] pointer-events-none"
       />
 
-      <div className="max-w-[90rem] mx-auto px-6 relative z-10">
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
         
         {/* Header Animation */}
         <motion.div 
@@ -130,7 +134,7 @@ const SubscriptionSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7 }}
-          className="text-center mb-20"
+          className="text-center mb-16 lg:mb-20"
         >
           <motion.div 
             onClick={handleSampleBowlClick}
@@ -148,99 +152,148 @@ const SubscriptionSection: React.FC = () => {
           </p>
         </motion.div>
 
-        {/* Plans Grid with Staggered Animation */}
         <motion.div 
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid md:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8 items-stretch"
+          className="w-full"
         >
-          {plans.map((plan, i) => (
-            <motion.div 
-              key={i}
-              variants={itemVariants}
-              whileHover={{ 
-                y: -12, 
-                transition: { duration: 0.3 }
-              }}
-              className={`relative p-6 lg:p-8 rounded-[2rem] border backdrop-blur-sm transition-shadow duration-300 flex flex-col h-full ${
-                plan.recommended 
-                  ? 'bg-white border-[#8FB373] shadow-2xl shadow-[#8FB373]/20 scale-100 xl:scale-105 z-10' 
-                  : 'bg-[#4A5D48]/60 border-[#596D56]/50 shadow-xl hover:bg-[#4A5D48]/80'
-              }`}
-            >
-              {plan.recommended && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#7a9a61] to-[#8FB373] text-white px-6 py-1.5 rounded-full text-[11px] font-bold tracking-widest uppercase shadow-lg z-20 whitespace-nowrap">
-                  {plan.tag}
+          {/* ================= REGULAR PLANS (3-Column Grid) ================= */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+            {regularPlans.map((plan, i) => (
+              <motion.div 
+                key={i}
+                variants={itemVariants}
+                whileHover={{ y: -10, transition: { duration: 0.3 } }}
+                className="relative p-6 lg:p-8 rounded-[2rem] border backdrop-blur-sm transition-shadow duration-300 flex flex-col h-full bg-[#4A5D48]/60 border-[#596D56]/50 shadow-xl hover:bg-[#4A5D48]/80"
+              >
+                <div className="w-full h-40 lg:h-48 mb-6 rounded-2xl overflow-hidden relative group shrink-0">
+                  <img 
+                    src={plan.image} 
+                    alt={plan.name} 
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
-              )}
-              
-              <div className="w-full h-40 lg:h-48 mb-6 rounded-2xl overflow-hidden relative group shrink-0">
-                <img 
-                  src={plan.image} 
-                  alt={plan.name} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </div>
-              
-              <div className="mb-6">
-                <h3 className={`font-bosch text-xl lg:text-2xl font-bold mb-2 ${plan.recommended ? 'text-[#354333]' : 'text-white'}`}>
-                  {plan.name}
-                </h3>
-                <p className={`text-sm leading-relaxed ${plan.recommended ? 'text-gray-600' : 'text-[#E3F0D8]/70'}`}>
-                  {plan.desc}
-                </p>
-              </div>
-              
-              <div className="mb-6 flex items-baseline">
-                <span className={`text-4xl lg:text-5xl font-extrabold tracking-tight ${plan.recommended ? 'text-[#354333]' : 'text-white'}`}>
-                  ₹{plan.price}
-                </span>
-                <span className={`text-xs lg:text-sm ml-2 font-medium ${plan.recommended ? 'text-gray-500' : 'text-[#E3F0D8]/60'}`}>
-                  / month
-                </span>
-              </div>
+                
+                <div className="mb-6">
+                  <h3 className="font-bosch text-xl lg:text-2xl font-bold mb-2 text-white">
+                    {plan.name}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-[#E3F0D8]/70">
+                    {plan.desc}
+                  </p>
+                </div>
+                
+                <div className="mb-6 flex items-baseline">
+                  <span className="text-4xl lg:text-4xl font-extrabold tracking-tight text-white">
+                    ₹{plan.price}
+                  </span>
+                  <span className="text-xs lg:text-sm ml-2 font-medium text-[#E3F0D8]/60">
+                    / month
+                  </span>
+                </div>
 
-              <div className={`text-xs font-montserrat font-bold uppercase tracking-widest mb-8 inline-block px-3 py-1 rounded-md w-fit ${
-                plan.recommended ? 'bg-[#8FB373]/10 text-[#6f8f57]' : 'bg-black/20 text-[#8FB373]'
-              }`}>
-                Portion: {plan.weight}
-              </div>
+                <div className="text-xs font-montserrat font-bold uppercase tracking-widest mb-8 inline-block px-3 py-1 rounded-md w-fit bg-black/20 text-[#8FB373]">
+                  Portion: {plan.weight}
+                </div>
 
-              {/* Feature List */}
-              <ul className="space-y-3 lg:space-y-4 mb-10 grow">
-                {plan.features.map((feature, idx) => (
+                <ul className="space-y-3 lg:space-y-4 mb-10 grow">
+                  {plan.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-start">
+                      <CheckIcon recommended={plan.recommended} />
+                      <span className="text-xs lg:text-sm font-medium text-[#E3F0D8]/90 ml-2">
+                        {feature}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+
+                <motion.button 
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setSelectedPlan(plan)}
+                  className="w-full py-4 rounded-xl font-bold tracking-wide transition-all duration-300 mt-auto bg-white/10 text-white hover:bg-white hover:text-[#354333]"
+                >
+                  SUBSCRIBE NOW
+                </motion.button>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* ================= ULTIMATE PLAN (Horizontal Box) ================= */}
+          <motion.div 
+            variants={itemVariants}
+            whileHover={{ y: -10, transition: { duration: 0.3 } }}
+            className="relative mt-12 p-6 lg:p-10 rounded-[2rem] border bg-white border-[#8FB373] shadow-2xl shadow-[#8FB373]/20 z-10 flex flex-col lg:flex-row gap-8 lg:gap-12 items-center"
+          >
+            {/* Tag */}
+            <div className="absolute -top-4 left-1/2 lg:left-12 -translate-x-1/2 lg:translate-x-0 bg-gradient-to-r from-[#7a9a61] to-[#8FB373] text-white px-6 py-1.5 rounded-full text-[11px] font-bold tracking-widest uppercase shadow-lg z-20 whitespace-nowrap">
+              {ultimatePlan.tag}
+            </div>
+
+            {/* Image section */}
+            <div className="w-full lg:w-1/3 h-56 lg:h-72 rounded-2xl overflow-hidden relative group shrink-0">
+              <img 
+                src={ultimatePlan.image} 
+                alt={ultimatePlan.name} 
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            </div>
+
+            {/* Details Section */}
+            <div className="flex-1 w-full">
+              <h3 className="font-bosch text-3xl lg:text-4xl font-extrabold mb-3 text-[#354333]">
+                {ultimatePlan.name}
+              </h3>
+              <p className="text-gray-600 mb-6 lg:text-lg leading-relaxed">
+                {ultimatePlan.desc}
+              </p>
+              
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-2">
+                {ultimatePlan.features.map((feature, idx) => (
                   <li key={idx} className="flex items-start">
-                    <CheckIcon recommended={plan.recommended} />
-                    <span className={`text-xs lg:text-sm font-medium ${plan.recommended ? 'text-gray-700' : 'text-[#E3F0D8]/90'} ml-2`}>
+                    <CheckIcon recommended={ultimatePlan.recommended} />
+                    <span className="text-sm lg:text-base font-medium text-gray-700 ml-2">
                       {feature}
                     </span>
                   </li>
                 ))}
               </ul>
+            </div>
+
+            {/* Pricing & CTA Section */}
+            <div className="w-full lg:w-1/4 shrink-0 flex flex-col items-start lg:items-end lg:text-right border-t lg:border-t-0 lg:border-l border-gray-200 pt-6 lg:pt-0 lg:pl-10">
+              <div className="text-xs font-montserrat font-bold uppercase tracking-widest mb-4 inline-block px-3 py-1 rounded-md bg-[#8FB373]/10 text-[#6f8f57]">
+                Portion: {ultimatePlan.weight}
+              </div>
+              
+              <div className="mb-8 flex items-baseline justify-start lg:justify-end w-full">
+                <span className="text-4xl lg:text-5xl font-extrabold tracking-tight text-[#354333]">
+                  ₹{ultimatePlan.price}
+                </span>
+                <span className="text-sm lg:text-base ml-2 font-medium text-gray-500">
+                  / month
+                </span>
+              </div>
 
               <motion.button 
                 whileTap={{ scale: 0.95 }}
-                onClick={() => setSelectedPlan(plan)}
-                className={`w-full py-4 rounded-xl font-bold tracking-wide transition-all duration-300 mt-auto ${
-                  plan.recommended 
-                    ? 'bg-[#354333] text-white hover:bg-[#8FB373] hover:shadow-lg' 
-                    : 'bg-white/10 text-white hover:bg-white hover:text-[#354333]'
-                }`}
+                onClick={() => setSelectedPlan(ultimatePlan)}
+                className="w-full py-4 rounded-xl font-bold tracking-wide transition-all duration-300 bg-[#354333] text-white hover:bg-[#8FB373] hover:shadow-lg shadow-md"
               >
                 SUBSCRIBE NOW
               </motion.button>
-            </motion.div>
-          ))}
+            </div>
+          </motion.div>
         </motion.div>
         
         {/* Footer Text */}
         <motion.p 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          transition={{ delay: 1 }}
+          transition={{ delay: 0.8 }}
           viewport={{ once: true }}
           className="text-center text-[#E3F0D8]/50 text-sm mt-16 font-montserrat flex items-center justify-center gap-2"
         >

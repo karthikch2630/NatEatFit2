@@ -3,7 +3,6 @@ import { motion, type Variants, useScroll, useTransform, MotionValue } from 'fra
 import { Utensils, ShieldBan, Milk, ChefHat, Clock, Leaf } from 'lucide-react';
 
 // --- DATA FOR FLOATING ITEMS ---
-// Added xRange, yRange, and rotateRange to control the scroll behavior
 const floatingDecorations = [
   {
     src: "/juice.webp",
@@ -11,8 +10,8 @@ const floatingDecorations = [
     className: "absolute -top-12 -right-8 w-40 md:w-56 h-40 md:h-56",
     delay: 0.1,
     duration: 5.5,
-    xRange: [100, -50],    // Moves from right to left
-    yRange: [-50, 80],     // Moves down
+    xRange: [100, -50],    
+    yRange: [-50, 80],     
     rotateRange: [15, -10],
   },
   {
@@ -21,8 +20,8 @@ const floatingDecorations = [
     className: "absolute top-[12%] -left-12 w-36 md:w-48 h-36 md:h-48",
     delay: 0.3,
     duration: 6,
-    xRange: [-150, 50],    // Moves from left to right
-    yRange: [0, -60],      // Moves slightly up
+    xRange: [-150, 50],    
+    yRange: [0, -60],      
     rotateRange: [-20, 10],
   },
   {
@@ -31,7 +30,7 @@ const floatingDecorations = [
     className: "absolute top-[40%] -right-16 w-44 md:w-60 h-44 md:h-60",
     delay: 0.5,
     duration: 5,
-    xRange: [120, -80],    // Moves from right to left
+    xRange: [120, -80],    
     yRange: [50, -50],
     rotateRange: [10, -20],
   },
@@ -41,7 +40,7 @@ const floatingDecorations = [
     className: "absolute -bottom-16 right-[15%] w-32 md:w-44 h-32 md:h-44",
     delay: 0.9,
     duration: 4.8,
-    xRange: [50, -100],    // Moves right to left
+    xRange: [50, -100],    
     yRange: [100, -50],
     rotateRange: [5, -15],
   },
@@ -51,7 +50,7 @@ const floatingDecorations = [
     className: "absolute -bottom-12 -left-8 w-40 md:w-56 h-40 md:h-56",
     delay: 1.1,
     duration: 6.2,
-    xRange: [-120, 80],    // Moves left to right
+    xRange: [-120, 80],    
     yRange: [80, -40],
     rotateRange: [-15, 5],
   }
@@ -64,18 +63,15 @@ interface FloatingItemProps {
 }
 
 const FloatingDecoration: React.FC<FloatingItemProps> = ({ item, scrollYProgress }) => {
-  // Map the 0-1 scroll progress to the specific ranges for this item
   const x = useTransform(scrollYProgress, [0, 1], item.xRange);
   const y = useTransform(scrollYProgress, [0, 1], item.yRange);
   const rotate = useTransform(scrollYProgress, [0, 1], item.rotateRange);
 
   return (
     <motion.div
-      // 1. SCROLL ANIMATION (Applied to wrapper)
       style={{ x, y, rotate }}
       className={`${item.className} z-0 pointer-events-none`}
     >
-      {/* 2. CONTINUOUS FLOATING ANIMATION (Applied to image) */}
       <motion.img
         src={item.src}
         alt={item.alt}
@@ -88,7 +84,7 @@ const FloatingDecoration: React.FC<FloatingItemProps> = ({ item, scrollYProgress
           repeat: Infinity,
           ease: "easeInOut"
         }}
-        className="w-full h-full object-contain drop-shadow-2xl opacity-70"
+        className="w-full h-full object-contain drop-shadow-2xl opacity-40" 
       />
     </motion.div>
   );
@@ -96,103 +92,132 @@ const FloatingDecoration: React.FC<FloatingItemProps> = ({ item, scrollYProgress
 
 // --- MAIN COMPONENT ---
 const WhyChooseUs: React.FC = () => {
-  // Ref for the section to track its scroll position
   const sectionRef = useRef<HTMLElement>(null);
 
-  // Track scroll progress of the section (0 when top enters, 1 when bottom leaves)
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"]
   });
 
-  // Entrance animation for the grid items
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.2 },
+      transition: { staggerChildren: 0.15 },
     },
   };
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: 'easeOut' } },
   };
 
   const features = [
     {
-      title: "Wide Variety of Bowls",
-      desc: "From high-protein quinoa and brown rice bowls to refreshing salads and cold-pressed juices, we offer an extensive selection to suit every palate.",
+      title: "Wide Variety",
+      desc: "From high-protein quinoa bowls to refreshing salads and cold-pressed juices, we offer an extensive selection.",
       icon: <Utensils size={28} strokeWidth={1.5} />,
     },
     {
       title: "Zero Preservatives",
-      desc: "100% natural and clean. We strictly avoid artificial colors, chemical preservatives, or hidden syrups to ensure exceptional quality.",
+      desc: "100% natural and clean. We strictly avoid artificial colors, chemical preservatives, or hidden syrups.",
       icon: <ShieldBan size={28} strokeWidth={1.5} />,
     },
     {
       title: "Fresh, Pure Milk",
-      desc: "Our signature overnight oats are soaked in premium, farm-fresh buffalo milk—never cheap, highly processed dairy alternatives.",
+      desc: "Our signature overnight oats are soaked in premium, farm-fresh buffalo milk—never cheap alternatives.",
       icon: <Milk size={28} strokeWidth={1.5} />,
     },
     {
-      title: "Homely Cooked Meals",
-      desc: "Prepared in small batches with the same hygiene, love, and care as your own home kitchen. No industrial shortcuts.",
+      title: "Homely Cooked",
+      desc: "Prepared in small batches with the same hygiene, love, and care as your own home kitchen.",
       icon: <ChefHat size={28} strokeWidth={1.5} />,
     },
     {
       title: "No 'Yesterday' Food",
-      desc: "We cook everything fresh every single morning. What you eat today was chopped, prepared, and cooked today.",
+      desc: "We cook everything fresh every single morning. What you eat today was chopped and prepared today.",
       icon: <Clock size={28} strokeWidth={1.5} />,
     },
     {
-      title: "Quality You Can Trust",
-      desc: "Directly sourced from trusted local farmers, delivering a perfect balance of taste and health benefits you can rely on daily.",
+      title: "Quality You Trust",
+      desc: "Directly sourced from trusted local farmers, delivering a perfect balance of taste and health benefits.",
       icon: <Leaf size={28} strokeWidth={1.5} />,
     },
   ];
 
   return (
-    <section ref={sectionRef} className="relative py-24 bg-white overflow-hidden font-montserrat">
+    <section ref={sectionRef} className="relative py-32 bg-[#FAF9F6] overflow-hidden font-montserrat">
       
       {/* ================= FLOATING BACKGROUND IMAGES ================= */}
       {floatingDecorations.map((item, i) => (
         <FloatingDecoration key={i} item={item} scrollYProgress={scrollYProgress} />
       ))}
+      
+      {/* Subtle Background Glow Elements */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#8FB373]/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#E3F0D8]/30 rounded-full blur-[100px] pointer-events-none" />
       {/* ============================================================== */}
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         
         {/* Header */}
-        <div className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl font-black text-[#1F452A] font-bosch mb-4">
+        <div className="text-center max-w-3xl mx-auto mb-20">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#E3F0D8]/80 text-[#425440] font-bold text-sm mb-6 border border-[#8FB373]/30"
+          >
+            <span className="flex h-2 w-2 rounded-full bg-[#8FB373]"></span>
+            Our Promise
+          </motion.div>
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-4xl md:text-5xl lg:text-6xl font-black text-[#425440] font-bosch mb-6"
+          >
             Why Choose Nat Eat Fit?
-          </h2>
-          <p className="text-[#5C5950] max-w-2xl mx-auto">
-            We don't just deliver food; we deliver a lifestyle. Uncompromising quality from our kitchen to your desk.
-          </p>
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-[#425440]/80 text-lg leading-relaxed"
+          >
+            We don't just deliver food; we deliver a lifestyle. Uncompromising quality from our kitchen directly to your desk.
+          </motion.p>
         </div>
 
-        {/* 3-Column Grid */}
+        {/* 3-Column Card Grid */}
         <motion.div 
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-16"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           {features.map((feature, index) => (
-            <motion.div key={index} variants={itemVariants} className="flex flex-col">
-              
-              <div className="w-20 h-20 rounded-full bg-[#E8F3E8] flex items-center justify-center text-[#2A5C38] mb-6 shadow-sm border border-[#D5E5D5]">
+            <motion.div 
+              key={index} 
+              variants={itemVariants} 
+              className="bg-white p-8 rounded-[2rem] border border-[#E3F0D8] shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group relative overflow-hidden flex flex-col items-start"
+            >
+              {/* Cute corner decoration for the card */}
+              <div className="absolute -top-10 -right-10 w-24 h-24 bg-[#E3F0D8]/30 rounded-full group-hover:scale-150 transition-transform duration-500 pointer-events-none" />
+
+              {/* Icon Container with Hover Animation */}
+              <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-[#E3F0D8]/60 flex items-center justify-center text-[#425440] mb-6 border border-[#8FB373]/20 transition-all duration-500 group-hover:bg-[#425440] group-hover:text-[#F3EFE9] group-hover:scale-110 group-hover:-rotate-6 group-hover:shadow-lg relative z-10">
                 {feature.icon}
               </div>
               
-              <h3 className="text-2xl font-bosch font-bold text-[#1F291E] mb-4 tracking-tight leading-snug">
+              <h3 className="text-xl font-bosch font-bold text-[#425440] mb-3 tracking-tight leading-snug relative z-10">
                 {feature.title}
               </h3>
               
-              <p className="text-[#5C5950] leading-relaxed text-sm md:text-base font-medium">
+              <p className="text-[#425440]/70 leading-relaxed text-sm font-medium relative z-10">
                 {feature.desc}
               </p>
               

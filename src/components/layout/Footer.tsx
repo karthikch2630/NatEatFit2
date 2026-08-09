@@ -64,10 +64,10 @@ const Footer: React.FC = () => {
               <h4 className="font-bold tracking-widest mb-4 uppercase text-sm text-white">Find Us</h4>
               <p className="text-sm leading-relaxed text-[#E8F3E8]/80 mb-2">
                 NAT EAT FIT<br />
-                Plot No. 45, Jubilee Hills, Hyderabad 500033
+                Raghavendra Colony, Kondapur, Hyderabad 500081
               </p>
               <p className="text-sm text-[#E8F3E8]/80">
-                hello@nateatfit.in <span className="mx-2 opacity-50">|</span> +91 98765 43210
+                hello@nateatfit.com <span className="mx-2 opacity-50">|</span> +91 99594 25322
               </p>
             </div>
 
