@@ -7,21 +7,21 @@ const ProcessSection: React.FC = () => {
       num: "01",
       title: "The Morning Harvest",
       desc: "Before the sun rises, our ingredients are gathered. We source pure, organic buffalo milk from local dairy farmers and hand-pick seasonal produce. No middlemen, just authentic farm-to-kitchen freshness.",
-      image: "https://images.unsplash.com/photo-1595858602796-0df30b6fc430?auto=format&fit=crop&q=80&w=800", // Traditional farm/milk vibe
+      image: "/morning-harvest.webp", // Traditional farm/milk vibe
       reverse: false
     },
     {
       num: "02",
       title: "The Art of Patience",
       desc: "True nourishment takes time. We don't use instant processing. Our oats are slow-soaked overnight to break down phytic acid, while our juices are strictly cold-pressed using traditional hydraulic pressure to preserve every living enzyme.",
-      image: "https://images.unsplash.com/photo-1615486171448-4fb324f33195?auto=format&fit=crop&q=80&w=800", // Preparation/ingredients vibe
+      image: "/art-of-pateinece.webp", // Preparation/ingredients vibe
       reverse: true
     },
     {
       num: "03",
       title: "Earth-First Serving",
       desc: "We honor the earth that feeds us. Your meals are carefully packed in 100% plastic-free, biodegradable boxes. From our kitchen to your hands, our traditional approach leaves no trace behind.",
-      image: "https://images.unsplash.com/photo-1605663737380-044733cd158e?auto=format&fit=crop&q=80&w=800", // Sustainable packaging vibe
+      image: "/Eco_friendly_food_packing_material.jpeg", // Sustainable packaging vibe
       reverse: false
     }
   ];
